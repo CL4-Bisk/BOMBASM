@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <title>Puzzle Levels</title>
+</head>
+<body>
+    <div class="overlay"></div>
+
+    <main class="tutorial-level">
+        <header>
+            <div class="left">
+                <h1 class="title">Title</h1>
+                <p class="subtitle">Subtitle</p>
+            </div>
+            <div class="right">
+                <a href="./../tutorial-levels/">← Go to Tutorial</a>
+            </div>
+        </header>
+        <section class="body">
+            <div class="left">
+                <div class="current-bitstring-screen"></div>
+                <div class="operation-buttons">
+                    <div class="main-buttons">
+                        <button class="operation-btn">AND 00</button>
+                        <button class="operation-btn">AND 01</button>
+                        <button class="operation-btn">AND 10</button>
+                        <button class="operation-btn">AND 11</button>
+                    </div>
+                    <div class="misc-buttons">
+                        <button class="misc-btn">RESET</button>
+                    </div>
+                </div>
+            </div>
+            <div class="right">                
+                <div class="prev-operation-section">
+                    <p class="label">Previous Operation</p>
+                    <div class="screen"></div>
+                </div>
+                <div class="description-section">
+                    <p class="label">Description</p>
+                    <div class="screen"></div>
+                </div>
+            </div>
+
+        </section>
+    </main>      
+    <script src="index.js"></script>
+</body>
+</html>

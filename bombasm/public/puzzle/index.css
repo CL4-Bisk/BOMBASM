@@ -1,0 +1,102 @@
+@import url(./../global.css);
+
+.puzzle-level {
+    width: 1000px;
+    height: 700px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 32px;
+    background-color: var(--color-very-light);
+}
+.puzzle-level header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-self: baseline;
+    margin-bottom: 32px;
+}
+.puzzle-level .title {
+    font-size: 40px;
+    font-weight: var(--fw-bold);
+}
+.puzzle-level .subtitle {
+    font-size: 20px;
+    color: var(--color-dark);
+}
+.puzzle-level .body {
+    width: 100%;
+    height: 600px;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    background-color: var(--color-light);
+}
+.puzzle-level .body .left {
+    display: grid;
+    grid-template-rows: 250px 1fr;
+}
+.puzzle-level .body .current-bitstring-screen {
+    background-color: var(--color-medium-dark);
+    height: 150px;
+    width: 500px;
+    align-self: center;
+    justify-self: center;
+}
+
+.puzzle-level .body .operation-buttons {
+    background-color: var(--color-medium-dark);
+    height: 250px;
+    width: 500px;
+    justify-self: center;
+    padding: 32px;
+
+}
+.puzzle-level .body .main-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    gap: 16px;
+}
+.puzzle-level .body .operation-btn {
+    padding: 8px 24px;
+}
+
+.puzzle-level .body .misc-buttons {
+    margin: 24px;
+}
+.puzzle-level .body .misc-btn {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 8px 16px;
+}
+
+.puzzle-level .body .right {
+    display: grid;
+    grid-template-rows: 60px 60px 60px 1fr;
+    row-gap: 16px;
+    width: 100%;
+    padding: 32px;
+}
+.puzzle-level .body .screen {
+    width: 100%;
+    margin-top: 8px;
+    height: 36px;
+    background-color: var(--color-medium-dark);
+
+}
+.puzzle-level .body .bomb {
+    width: 100%;
+    height: 200px;
+    margin-top: 32px;
+    padding: 32px;
+    background-color: var(--color-medium-dark);
+
+}
+
+
+

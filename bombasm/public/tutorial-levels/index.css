@@ -1,0 +1,53 @@
+@import url(./../global.css);
+
+.tutorial-levels {
+    width: 1000px;
+    height: 700px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 64px;
+    background-color: var(--color-very-light);
+}
+.tutorial-levels header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-self: baseline;
+    margin-bottom: 32px;
+}
+.tutorial-levels .title {
+    font-size: 40px;
+    font-weight: var(--fw-bold);
+}
+.tutorial-levels .subtitle {
+    font-size: 20px;
+    color: var(--color-dark);
+}
+.tutorial-levels .body {
+    width: 80%;
+}
+.tutorial-levels .levels {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 32px 16px;
+    justify-content: center;
+    justify-items: center;
+    margin-block: 32px 64px;
+}
+.tutorial-levels .level-btn {
+    width: 100px;
+    aspect-ratio: 1/1;
+    font-size: 16px;   
+}
+.tutorial-levels .to-puzzle-btn {
+    width: 70%;
+    margin-inline: auto;
+    padding: 8px 16px;
+    background-color: var(--color-dark);
+    color: var(--color-white); 
+}
