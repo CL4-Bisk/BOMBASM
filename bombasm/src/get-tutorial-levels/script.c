@@ -46,6 +46,91 @@ int main() {
         "This is the AND Operator."
     );
 
+    ptr[1] = create_tutorial_level (
+        "OR",
+        "OR Operator",
+        bits0,
+        ops0,
+        "This is the OR Operator."
+    )
+
+    ptr[2] = create_tutorial_level (
+        "XOR",
+        "XOR Operator",
+        bits0,
+        ops0,
+        "This is the XOR Operator."
+    )
+
+    ptr[3] = create_tutorial_level (
+        "SHL",
+        "SHL Operator",
+        bits0,
+        ops0,
+        "This is the SHL Operator."
+    )
+
+    ptr[4] = create_tutorial_level (
+        "SHR",
+        "SHR Operator",
+        bits0,
+        ops0,
+        "This is the SHR Operator."
+    )
+
+    ptr[5] = create_tutorial_level (
+        "ROL",
+        "ROL Operator",
+        bits0,
+        ops0,
+        "This is the ROL Operator."
+    )
+
+    ptr[6] = create_tutorial_level (
+        "ROR",
+        "ROR Operator",
+        bits0,
+        ops0,
+        "This is the ROR Operator."
+    )
+
     return 0;
 
+}
+
+
+void stringToUpper(char *str) {
+    char *ptr = str;
+    while (*ptr) {
+        *ptr = toupper((unsigned char)*ptr);
+        ptr++;
+    }
+}
+
+EMSCRIPTEN_KEEPALIVE
+int bitStringOperations(int a, int b, char *op) {
+    int result = 0;
+    stringToUpper(op);
+
+    if (strcmp(op, "AND") == 0) {
+        result = a & b;
+    } else if (strcmp(op, "OR") == 0) {
+        result = a | b;
+    } else if (strcmp(op, "XOR") == 0) {
+        result = a ^ b;
+    } else if (strcmp(op, "NOT") == 0) {
+        result = ~a;
+    } else if (strcmp(op, "SHL") == 0) {
+        result = a << b;
+    } else if (strcmp(op, "SHR") == 0) {
+        result = a >> b;
+    } else if (strcmp(op, "ROL") == 0) {
+        result = (a << b) | (a >> (32 - b));
+    } else if (strcmp(op, "ROR") == 0) {
+        result = (a >> b) | (a << (32 - b));
+    } else {
+        result = 0;  // unknown op
+    }
+
+    return result;
 }
