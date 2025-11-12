@@ -1,10 +1,8 @@
 #include <stdio.h>
 #include <stdbool.h>
-#include <ctype.h>
-#include <string.h>
-#include <stdlib.h>
-#include <emscripten/html5.h>
-#include <emscripten.h>
+#include <stdlib.h>  
+#include <string.h>   
+// #include <emscripten.h>
 
 // struct tutorial_level {
 //     char *label;
@@ -14,45 +12,76 @@
 //     char *instruction;
 // }; 
 
-struct TutorialLevel{
-    char *title;
-    char *operator;
+struct PuzzleLevel{
+    int  levelNumber;
     int  bitWidth;
     char *startBitstring;
+    char *goalBitstring;
     char **operation_set;
-    char *description;
+    int  operationCount;
 };
 
-struct TutorialLevel tutorial_levels[8];
+PuzzleLevel puzzle_levels[7];
 
-EMSCRIPTEN_KEEPALIVE
-char* getTutorialLevelTitle(int index) {
-    return tutorial_levels[index].title;
-}
+puzzle_levels[0].levelNumber = 1;
+puzzle_levels[0].bitWidth = 4;
+puzzle_levels[0].startBitstring = "0000";
+puzzle_levels[0].goalBitstring = "0001";
+char *puz_ops0[] = {"AND 0000", "OR 0001", "NOT 0001", "XOR 0010", "SHL 0001", "SHR 0001"};
+puzzle_levels[0].operation_set = puz_ops0;
+puzzle_levels[0].operationCount = 5;
 
-EMSCRIPTEN_KEEPALIVE
-char* getTutorialLevelOperator(int index) {
-    return tutorial_levels[index].operator;
-}
+puzzle_levels[1].levelNumber = 2;
+puzzle_levels[1].bitWidth = 4;
+puzzle_levels[1].startBitstring = "0010";
+puzzle_levels[1].goalBitstring = "0100";
+char *puz_ops1[] = {"AND 0010", "OR 0100", "NOT 0100", "XOR 0110", "SHL 0010", "SHR 0010"};
+puzzle_levels[1].operation_set = puz_ops1;
+puzzle_levels[1].operationCount = 5;
 
-EMSCRIPTEN_KEEPALIVE
-int getTutorialLevelBitWidth(int index) {
-    return tutorial_levels[index].bitWidth;
-}
+puzzle_levels[2].levelNumber = 3;
+puzzle_levels[2].bitWidth = 4;
+puzzle_levels[2].startBitstring = "0100";
+puzzle_levels[2].goalBitstring = "1000";
+char *puz_ops2[] = {"AND 0100", "OR 1000", "NOT 1000", "XOR 1100", "SHL 0100", "SHR 0100"};
+puzzle_levels[2].operation_set = puz_ops2;
+puzzle_levels[2].operationCount = 5;
 
-EMSCRIPTEN_KEEPALIVE
-char* getTutorialLevelStartBitstring(int index) {
-    return tutorial_levels[index].startBitstring;
-}
+puzzle_levels[3].levelNumber = 4;
+puzzle_levels[3].bitWidth = 4;
+puzzle_levels[3].startBitstring = "1000";
+puzzle_levels[3].goalBitstring = "0001";
+char *puz_ops3[] = {"AND 1000", "OR 0001", "NOT 0001", "XOR 1001", "SHL 1000", "SHR 1000"};
+puzzle_levels[3].operation_set = puz_ops3;
+puzzle_levels[3].operationCount = 5;
 
-EMSCRIPTEN_KEEPALIVE
-char** getTutorialLevelOperationSet(int index) {
-    return tutorial_levels[index].operation_set;
-}
+puzzle_levels[4].levelNumber = 5;
+puzzle_levels[4].bitWidth = 8;
+puzzle_levels[4].startBitstring = "00000001";
+puzzle_levels[4].goalBitstring = "00010000";
+char *puz_ops4[] = {"AND 00000001", "OR 00010000", "NOT 00010000", "XOR 00010001", "SHL 00000001", "SHR 00000001"};
+puzzle_levels[4].operation_set = puz_ops4;
+puzzle_levels[4].operationCount = 5;
 
-EMSCRIPTEN_KEEPALIVE
-char* getTutorialLevelDescription(int index) {
-    return tutorial_levels[index].description;
+puzzle_levels[5].levelNumber = 6;
+puzzle_levels[5].bitWidth = 8;
+puzzle_levels[5].startBitstring = "00010000";
+puzzle_levels[5].goalBitstring = "00100000";
+char *puz_ops5[] = {"AND 00010000", "OR 00100000", "NOT 00100000", "XOR 00110000", "SHL 00010000", "SHR 00010000"};
+puzzle_levels[5].operation_set = puz_ops5;
+puzzle_levels[5].operationCount = 5;
+
+puzzle_levels[6].levelNumber = 7;
+puzzle_levels[6].bitWidth = 16;
+puzzle_levels[6].startBitstring = "0000000000000001";
+puzzle_levels[6].goalBitstring = "0000000000010000";
+char *puz_ops6[] = {"AND 0000000000000001", "OR 0000000000010000", "NOT 0000000000010000", "XOR 0000000000010001", "SHL 0000000000000001", "SHR 0000000000000001"};
+puzzle_levels[6].operation_set = puz_ops6;
+puzzle_levels[6].operationCount = 5;
+
+
+struct PuzzleLevel getPuzzleLevel(int index) {
+    return puzzle_levels[index];
 }
 
 // struct tutorial_level create_tutorial_level(char *level_label, char *level_title, int *bit_array_ptr, 
@@ -67,69 +96,6 @@ char* getTutorialLevelDescription(int index) {
 // }
 
 int main() {    
-    tutorial_levels[0].title = "AND Operator";
-    tutorial_levels[0].operator = "AND";
-    tutorial_levels[0].bitWidth = 2;
-    tutorial_levels[0].startBitstring = "00";
-    char *ops0[] = {"AND 00", "AND 01", "AND 10", "AND 11"};
-    tutorial_levels[0].operation_set = ops0;
-    tutorial_levels[0].description = "This is the AND Operator.";
-
-    tutorial_levels[1].title = "OR Operator";
-    tutorial_levels[1].operator = "OR";
-    tutorial_levels[1].bitWidth = 2;
-    tutorial_levels[1].startBitstring = "00";
-    char *ops1[] = {"OR 00", "OR 01", "OR 10", "OR 11"};
-    tutorial_levels[1].operation_set = ops1;
-    tutorial_levels[1].description = "This is the OR Operator.";
-
-    tutorial_levels[2].title = "NOT Operator";
-    tutorial_levels[2].operator = "NOT";
-    tutorial_levels[2].bitWidth = 2;
-    tutorial_levels[2].startBitstring = "00";
-    char *ops2[] = {"NOT 00", "NOT 01", "NOT 10", "NOT 11"};
-    tutorial_levels[2].operation_set = ops2;
-    tutorial_levels[2].description = "This is the NOT Operator.";
-
-    tutorial_levels[3].title = "XOR Operator";
-    tutorial_levels[3].operator = "XOR";
-    tutorial_levels[3].bitWidth = 2;
-    tutorial_levels[3].startBitstring = "00";
-    char *ops3[] = {"XOR 00", "XOR 01", "XOR 10", "XOR 11"};
-    tutorial_levels[3].operation_set = ops2;
-    tutorial_levels[3].description = "This is the XOR Operator.";
-
-    tutorial_levels[4].title = "SHL Operator";
-    tutorial_levels[4].operator = "SHL";
-    tutorial_levels[4].bitWidth = 2;
-    tutorial_levels[4].startBitstring = "00";
-    char *ops4[] = {"SHL 00", "SHL 01", "SHL 10", "SHL 11"};
-    tutorial_levels[4].operation_set = ops3;
-    tutorial_levels[4].description = "This is the SHL Operator.";
-
-    tutorial_levels[5].title = "SHR Operator";
-    tutorial_levels[5].operator = "SHR";
-    tutorial_levels[5].bitWidth = 2;
-    tutorial_levels[5].startBitstring = "00";
-    char *ops5[] = {"SHR 00", "SHR 01", "SHR 10", "SHR 11"};
-    tutorial_levels[5].operation_set = ops4;
-    tutorial_levels[5].description = "This is the SHR Operator.";
-
-    tutorial_levels[6].title = "ROL Operator";
-    tutorial_levels[6].operator = "ROL";
-    tutorial_levels[6].bitWidth = 2;
-    tutorial_levels[6].startBitstring = "00";
-    char *ops6[] = {"ROL 00", "ROL 01", "ROL 10", "ROL 11"};
-    tutorial_levels[6].operation_set = ops5;
-    tutorial_levels[6].description = "This is the ROL Operator.";
-
-    tutorial_levels[7].title = "ROR Operator";
-    tutorial_levels[7].operator = "ROR";
-    tutorial_levels[7].bitWidth = 2;
-    tutorial_levels[7].startBitstring = "00";
-    char *ops7[] = {"ROR 00", "ROR 01", "ROR 10", "ROR 11"};
-    tutorial_levels[7].operation_set = ops6;
-    tutorial_levels[7].description = "This is the ROR Operator.";
 
     // int list_size = 1;
     // tutorial_level *ptr = malloc(sizeof(tutorial_level) * list_size);

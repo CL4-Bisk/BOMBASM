@@ -7,8 +7,8 @@
 
 
 // EMSCRIPTEN_KEEPALIVE
-// int addNum(int a, int b) {
-//   return a + b;
+// void addNum(int a, int b, int *result) {
+//   *result = a + b;
 // }
 
 // EMSCRIPTEN_KEEPALIVE
@@ -16,6 +16,7 @@
 //   printf("hello, world!\n");
 //   return 0;
 // }
+
 
 void stringToUpper(char *str) {
     char *ptr = str;
@@ -25,10 +26,35 @@ void stringToUpper(char *str) {
     }
 }
 
+// convert binary string to int like "1011" → integer
+uint32_t binaryStringToInt(const char *binStr) {
+    uint32_t value = 0;
+    while (*binStr) {
+        value = (value << 1) | (*binStr - '0'); //this is basically shl and add
+        binStr++;
+    }
+    return value;
+}
+
+// convert int to binary string with specified bitwidth
+char* intToBinaryString(uint32_t value, int bitWidth) {
+    char *binary = (char*)malloc(bitWidth + 1); // make array with size of bitWidth + 1 for null terminator
+    for (int i = bitWidth - 1; i >= 0; i--) {
+        binary[bitWidth - 1 - i] = ((value >> i) & 1) ? '1' : '0'; // shr and mask
+    }
+    binary[bitWidth] = '\0';
+    return binary;
+}
+
 EMSCRIPTEN_KEEPALIVE
-uint32_t bitStringOperations(uint32_t a, uint32_t b, char *op, uint8_t bitWidth) {
+char* bitStringOperations(char *a, char *b, char *op, int bitWidth) {
   uint32_t result = 0;
   uint32_t mask;
+  uint32_t A;
+  uint32_t B;
+
+  A = binaryStringToInt(a);
+  B = binaryStringToInt(b);
 
   switch (bitWidth) {
       case 4:
@@ -40,38 +66,38 @@ uint32_t bitStringOperations(uint32_t a, uint32_t b, char *op, uint8_t bitWidth)
       case 16:
           mask = 0xFFFF;     // 16 bits
           break;
-      case 32:
       default:
           mask = 0xFFFFFFFF; // 32 bits
+          bitWidth = 32;
           break;
   }
 
-  a &= mask;
-  b &= mask;
+  A &= mask;
+  B &= mask;
 
   stringToUpper(op);
 
   if (strcmp(op, "AND") == 0) {
-      result = a & b;
+      result = A & B;
   } else if (strcmp(op, "OR") == 0) {
-      result = a | b;
+      result = A | B;
   } else if (strcmp(op, "XOR") == 0) {
-      result = a ^ b;
+      result = A ^ B;
   } else if (strcmp(op, "NOT") == 0) {
-      result = ~a & mask; // re-mask to remove extra bits
+      result = ~A & mask; // re-mask to remove extra bits
   } else if (strcmp(op, "SHL") == 0) {
-      result = (a << b) & mask;
+      result = (A << B) & mask;
   } else if (strcmp(op, "SHR") == 0) {
-      result = (a >> b) & mask;
+      result = (A >> B) & mask;
   } else if (strcmp(op, "ROL") == 0) {
-      uint8_t shift = b % bitWidth; // prevent over-rotation (maguba ang rotate)
-      result = ((a << shift) | (a >> (bitWidth - shift))) & mask;
+      uint8_t shift = B % bitWidth; // prevent over-rotation (maguba ang rotate)
+      result = ((A << shift) | (A >> (bitWidth - shift))) & mask;
   } else if (strcmp(op, "ROR") == 0) {
-      uint8_t shift = b % bitWidth;
-      result = ((a >> shift) | (a << (bitWidth - shift))) & mask;
+      uint8_t shift = B % bitWidth;
+      result = ((A >> shift) | (A << (bitWidth - shift))) & mask;
   } else {
       result = 0; // invalid op
   }
 
-  return result;
+  return intToBinaryString(result, bitWidth);
 }
