@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="index.css">
     <title> Tutorial Levels</title>
+    <script src="../../src/get-tutorial-levels/script.js"></script>
 </head>
 <body>
-    <script src="./../../src/get-tutorial-levels/script.js"></script>  
     <div class="overlay"></div>
 
     <main class="tutorial-levels">
@@ -22,14 +22,74 @@
         </header>
         <section class="body">
             <section class="levels">
-                <button class="level-btn">AND</button>
-                <button class="level-btn">OR</button>
-                <button class="level-btn">NOT</button>
-                <button class="level-btn">XOR</button>
-                <button class="level-btn">SHL, SHR</button>
-                <button class="level-btn">ROL, ROR</button>
+                <button class="level-btn" id="and">AND</button>
+                <button class="level-btn" id="or">OR</button>
+                <button class="level-btn" id="not">NOT</button>
+                <button class="level-btn" id="xor">XOR</button>
+                <button class="level-btn" id="shift">SHL, SHR</button>
+                <button class="level-btn" id="rotate">ROL, ROR</button>
             </section>
             <button class="to-puzzle-btn">Go to Puzzles</button>
+
+            <script>
+                const tutorAND = document.getElementById("and");
+                const tutorOR = document.getElementById("or");
+                const tutorNOT = document.getElementById("not");
+                const tutorXOR = document.getElementById("xor");
+                const tutorSHIFTS = document.getElementById("shift");
+                const tutorROTATES = document.getElementById("rotate");
+
+                const AND = 0;
+                const OR = 1;
+                const NOT = 2;
+                const XOR = 3;
+                const SHIFTS = 4;
+                const ROTATES = 5;
+
+                tutorAND.addEventListener("click", e => {
+                    e.preventDefault();
+                    var ANDTitle = Module.ccall(
+                        "getTutorialLevelTitle", // function name
+                        "string", // return type
+                        ["number"], // argument types
+                        [AND] // arguments
+                    );
+                    var ANDOperator = Module.ccall(
+                        "getTutorialLevelOperator", // function name
+                        "string", // return type
+                        ["number"], // argument types
+                        [AND] // arguments
+                    );
+                    var ANDBitWidth = Module.ccall(
+                        "getTutorialLevelBitWidth", // function name
+                        "number", // return type
+                        ["number"], // argument types
+                        [AND] // arguments
+                    );
+                    var ANDStartBitstring = Module.ccall(
+                        "getTutorialLevelStartBitstring", // function name
+                        "string", // return type
+                        ["number"], // argument types
+                        [AND] // arguments
+                    );
+                    var ANDOperationSet = Module.ccall(
+                        "getTutorialLevelOperationSet", // function name
+                        "string", // return type
+                        ["number"], // argument types
+                        [AND] // arguments
+                    );
+                    var ANDDescription = Module.ccall(
+                        "getTutorialLevelDescription", // function name
+                        "string", // return type
+                        ["number"], // argument types
+                        [AND] // arguments
+                    );
+                    console.log(ANDTitle, ANDOperator, ANDBitWidth, ANDStartBitstring, ANDOperationSet, ANDDescription);
+                });
+
+
+            </script>  
+
         </section>
     </main>    
     <script src="index.js"></script>

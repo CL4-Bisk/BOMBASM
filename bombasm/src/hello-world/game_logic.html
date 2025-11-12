@@ -24,11 +24,11 @@
         function func() {
             var result = Module.ccall(
                 "bitStringOperations", // function name
-                "number", // return type
-                ["number", "number", "string", "number"], // argument types
+                "string", // return type
+                ["string", "string", "string", "number"], // argument types
                 [a.value, b.value, operator.value, c.value] // arguments
             );
-            Result.innerHTML = "result is" + result;
+            Result.innerHTML = "result is " + result;
         }
     </script>
 </body>
