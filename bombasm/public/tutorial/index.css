@@ -78,6 +78,7 @@
 .tutorial-level .body .right {
     display: grid;
     grid-template-rows: 80px 1fr;
+    row-gap: 16px;
     width: 100%;
     padding: 32px;
 }
@@ -96,5 +97,8 @@
     background-color: var(--color-medium-dark);
 
 }
-
-
+.tutorial-level .main-btn {
+    width: 90px;
+    aspect-ratio: 1/1;
+    font-size: 20px;   
+}

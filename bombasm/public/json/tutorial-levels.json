@@ -1,0 +1,63 @@
+[
+  {
+    "number": 1,
+    "title": "AND",
+    "subtitle": "Logical Operator",
+    "start_bitstring": "1",
+    "operations": ["AND 0", "AND 1"],
+    "locked": false,
+    "bitstring_length": 1,
+    "desc" : ""
+  },
+  {
+    "number": 2,
+    "title": "OR",
+    "subtitle": "Logical Operator",
+    "start_bitstring": "0",
+    "operations": ["OR 0", "OR 1"],
+    "locked": false,
+    "bitstring_length": 1,
+    "desc" : ""
+  },
+  {
+    "number": 3,
+    "title": "NOT",
+    "subtitle": "Logical Operator",
+    "start_bitstring": "1",
+    "operations": ["NOT"],
+    "locked": false,
+    "bitstring_length": 1,
+    "desc" : ""
+  },
+  {
+    "number": 4,
+    "title": "XOR",
+    "subtitle": "Logical Operator",
+    "start_bitstring": "1",
+    "operations": ["XOR 0", "XOR 1"],
+    "locked": false,
+    "bitstring_length": 1,
+    "desc" : ""
+  },
+  {
+    "number": 5,
+    "title": "SHL, SHR",
+    "subtitle": "Shift Operators",
+    "start_bitstring": "01000101",
+    "operations": ["SHL 1", "SHR 1", "SHL 2", "SHR 2"],
+    "locked": false,
+    "bitstring_length": 8,
+    "desc" : ""
+  },
+  {
+    "number": 6,
+    "title": "ROL, ROR",
+    "subtitle": "Rotate Operators",
+    "start_bitstring": "01000101",
+    "operations": ["ROL 1", "ROR 1", "ROL 2", "ROR 2"],
+    "locked": false,
+    "bitstring_length": 8,
+    "desc" : ""
+  }
+
+]

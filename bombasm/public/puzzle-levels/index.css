@@ -33,14 +33,14 @@
 }
 .puzzle-levels .levels {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 32px 16px;
     justify-content: center;
     justify-items: center;
     margin-block: 32px 64px;
 }
 .puzzle-levels .level-btn {
-    width: 100px;
+    width: 90px;
     aspect-ratio: 1/1;
     font-size: 20px;   
 }

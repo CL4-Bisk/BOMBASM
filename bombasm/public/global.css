@@ -36,6 +36,10 @@ button {
     font-weight: var(--fw-bold);
 }
 
+.hidden {
+    display: none !important;
+}
+
 .overlay {
     width: 100vw;
     height: 100vh;
