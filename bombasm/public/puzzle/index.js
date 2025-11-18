@@ -19,6 +19,7 @@ PuzzleLevelsModule().then((Module) => {
 
     const params = new URLSearchParams(document.location.search);
     const puzzleIndex = parseInt(params.get("level"));
+    const puzzleUnlockedLevels = JSON.parse(sessionStorage.getItem("unlockedLevels"));
 
     console.log(getPuzzleLevelTitle(puzzleIndex));
 
@@ -27,6 +28,19 @@ PuzzleLevelsModule().then((Module) => {
     currentBit.textContent  = getStartBitstring(puzzleIndex); 
     targetBit.textContent   = getGoalBitstring(puzzleIndex);
     opcount.textContent     = getOpCount(puzzleIndex);
+
+    function unlockNextLevel(currentLevel) {
+        const nextLevel = currentLevel + 1;
+        const unlockedLevels = JSON.parse(sessionStorage.getItem("unlockedLevels"));
+        if (!unlockedLevels.includes(nextLevel) && nextLevel <= getPuzzleCount()) {
+            sessionStorage.setItem("unlockedLevels", JSON.stringify([...unlockedLevels, nextLevel]));
+            console.log("Level " + nextLevel + " has been unlocked.");
+        }
+    }
+
+    if (!puzzleUnlockedLevels.includes(puzzleIndex + 1)) {
+        window.location.href = "./../puzzle-levels/"
+    }
 
     GameLogicModule().then((Module) => { 
         const doBitOperation = Module.cwrap(
@@ -55,6 +69,7 @@ PuzzleLevelsModule().then((Module) => {
                     const victoryModal = document.querySelector(".victory-modal");
                     modalOverlay.classList.remove("hidden");
                     victoryModal.classList.remove("hidden");
+                    unlockNextLevel(puzzleIndex + 1);
                 } else if (opcount.textContent == 0) {
                     const modalOverlay = document.querySelector(".modal-overlay");
                     const gameOverModal = document.querySelector(".gameover-modal");
@@ -80,5 +95,10 @@ PuzzleLevelsModule().then((Module) => {
             window.location.href = "./../puzzle-levels/"
         });
     })
+
+    const nextPuzzleBtn = document.querySelector(".next-puzzle-btn");
+    nextPuzzleBtn.addEventListener("click", () => {
+        window.location.href = `./../puzzle/?level=${puzzleIndex + 1}`;
+    });
 });
 

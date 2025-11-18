@@ -17,4 +17,37 @@ PuzzleLevelsModule().then((Module) => {
         });
         puzzleLevelDisplay.appendChild(button);
     }
+
+    // sessionStorage.setItem("1", "unlocked")
+    // sessionStorage.setItem("2", "locked")
+    // sessionStorage.setItem("3", "locked")
+    // sessionStorage.setItem("4", "locked")
+    // sessionStorage.setItem("5", "locked")
+    // sessionStorage.setItem("6", "locked")
+    // sessionStorage.setItem("7", "locked")
+
+    // if (sessionStorage.getItem("1") === "unlocked") {
+    //     document.getElementById("1").disabled = false;
+    // }
+    // if (sessionStorage.getItem("2") === "unlocked") {
+    //     document.getElementById("2").disabled = false;
+    // }
+
+    // for testing purposes
+    // sessionStorage.setItem("unlockedLevels", "5");
+
+    if (!sessionStorage.getItem("unlockedLevels")) {
+        sessionStorage.setItem("unlockedLevels", JSON.stringify([1]));
+    }
+
+    const unlockedLevels = JSON.parse(sessionStorage.getItem("unlockedLevels"));
+    for (let i = 1; i <= puzzleCount(); i++) {
+        if (unlockedLevels.includes(i)) {
+            document.getElementById(i).disabled = false;
+            console.log("Level " + i + " is unlocked.");
+        } else {
+            document.getElementById(i).disabled = true;
+            console.log("Level " + i + " is locked.");
+        }
+    }
 });
