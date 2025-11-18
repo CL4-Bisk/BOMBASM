@@ -1,117 +1,84 @@
-const title         = document.querySelector(".title");
-const subtitle      = document.querySelector(".subtitle");
-const currentBit    = document.querySelector(".current-bitstring-screen");
-const targetBit     = document.querySelector(".target-section .screen");
-const previousOp    = document.querySelector(".prev-operation-section .screen");
-const opcount       = document.querySelector(".operation-count-section .screen")
-const opButtons     = document.querySelector(".main-buttons");
+PuzzleLevelsModule().then((Module) => {
+    const getPuzzleCount      = Module.cwrap("getPuzzleLevelCount", "number", []);
+    const getLevelNumber      = Module.cwrap("getPuzzleLevelNumber", "number", ["number"]);
+    const getPuzzleLevelTitle = Module.cwrap("getPuzzleLevelTitle", "string", ["number"])
+    const getPuzzleLevelSubtitle = Module.cwrap("getPuzzleLevelSubtitle", "string", ["number"]) 
+    const getBitwidth         = Module.cwrap("getPuzzleLevelBitWidth", "number", []);
+    const getStartBitstring   = Module.cwrap("getPuzzleLevelStartBitstring", "string", []);
+    const getGoalBitstring    = Module.cwrap("getPuzzleLevelGoalBitstring", "string", []);
+    const getOpCount          = Module.cwrap("getPuzzleLevelOperationCount", "number", []);
+    const getOperations       = Module.cwrap("getPuzzleLevelOperations", "string", []);
 
-(async () => {
+    const title         = document.querySelector(".title");
+    const subtitle      = document.querySelector(".subtitle");
+    const currentBit    = document.querySelector(".current-bitstring-screen");
+    const targetBit     = document.querySelector(".target-section .screen");
+    const previousOp    = document.querySelector(".prev-operation-section .screen");
+    const opcount       = document.querySelector(".operation-count-section .screen")
+    const opButtons     = document.querySelector(".main-buttons");
+
     const params = new URLSearchParams(document.location.search);
-    const lvl = params.get("level");
+    const puzzleIndex = parseInt(params.get("level"));
 
-    const response = await fetch('./../json/puzzle-levels.json'); 
-    const puzzles = await response.json();
-    let puzzle;
-    puzzles.forEach(p => 
-        (p.number == lvl) ? puzzle = p : {}
-    )
+    console.log(getPuzzleLevelTitle(puzzleIndex));
 
-    title.textContent       = puzzle.title;
-    subtitle.textContent    = puzzle.subtitle;
-    currentBit.textContent  = puzzle.start_bitstring; 
-    targetBit.textContent   = puzzle.goal_bitstring;
-    opcount.textContent     = puzzle.op_count;
+    title.textContent       = getPuzzleLevelTitle(puzzleIndex);
+    subtitle.textContent    = getPuzzleLevelSubtitle(puzzleIndex);
+    currentBit.textContent  = getStartBitstring(puzzleIndex); 
+    targetBit.textContent   = getGoalBitstring(puzzleIndex);
+    opcount.textContent     = getOpCount(puzzleIndex);
 
-    puzzle.operations.forEach(op => {
-        const button = document.createElement("button");
-        button.className = "operation-btn";
-        button.textContent = op;
-        button.addEventListener("click", () => doBitOperation(op));
-        opButtons.appendChild(button);
+    GameLogicModule().then((Module) => { 
+        const doBitOperation = Module.cwrap(
+            "bitStringOperations", "string", ["string", "string", "string", "number"]
+        );
+
+        const operations = getOperations().split(",");
+        operations.forEach(op => {
+            const button = document.createElement("button");
+            button.className = "operation-btn";
+            button.textContent = op;
+
+            let [operation, operand] = op.split(" ");
+            if (operand === undefined) operand = "";
+
+            button.addEventListener("click", () => { 
+                currentBit.textContent = doBitOperation(
+                    currentBit.textContent, 
+                    operand,
+                    operation,
+                    getBitwidth(puzzleIndex)
+                );
+                opcount.textContent = parseInt(opcount.textContent) - 1;
+                if (currentBit.textContent == targetBit.textContent) {
+                    const modalOverlay = document.querySelector(".modal-overlay");
+                    const victoryModal = document.querySelector(".victory-modal");
+                    modalOverlay.classList.remove("hidden");
+                    victoryModal.classList.remove("hidden");
+                } else if (opcount.textContent == 0) {
+                    const modalOverlay = document.querySelector(".modal-overlay");
+                    const gameOverModal = document.querySelector(".gameover-modal");
+                    modalOverlay.classList.remove("hidden");
+                    gameOverModal.classList.remove("hidden");                    
+                }
+            });
+
+            opButtons.appendChild(button);
+        });        
     });
 
-    function doBitOperation(op) {
-        [operator, operand] = op.split(" ");
+    const resetLevel = document.querySelectorAll(".reset-btn");
+    resetLevel.forEach(btn => {
+        btn.addEventListener("click", () => {
+            window.location.reload();
+        });
+    })  
 
-        let newString = ""; 
-        switch (operator) {
-        case "AND": 
-            for (let i = 0; i < puzzle.bitstring_length; i++) {
-                newString += (operand[i] & currentBit.textContent[i]);
-            }
-            break;
-        case "OR": 
-            for (let i = 0; i < puzzle.bitstring_length; i++) {
-                newString += (operand[i] | currentBit.textContent[i]);
-            }
-            break;
-        case "NOT": 
-            for (let i = 0; i < puzzle.bitstring_length; i++) {
-                newString += (currentBit.textContent[i] ^ 1);
-            }
-            break;
-        case "XOR": 
-            for (let i = 0; i < puzzle.bitstring_length; i++) {
-                newString += (operand[i] ^ currentBit.textContent[i]);
-            }
-            break;
-        
-        case "SHL": {
-            let shift = parseInt(operand);
-            newString = currentBit.textContent.slice(shift) + "0".repeat(shift);
-            break;
-        }
+    const toPuzzlePage = document.querySelectorAll(".to-puzzle-btn");
+    toPuzzlePage.forEach(btn => {
+        btn.addEventListener("click", () => {
+            window.location.href = "./../puzzle-levels/"
+        });
+    })
+});
 
-        case "SHR": { 
-            let shift = parseInt(operand);
-            newString = "0".repeat(shift) + currentBit.textContent.slice(0, puzzle.bitstring_length - shift);
-            break;
-        }
-
-        case "ROL": {
-            let shift = parseInt(operand);
-            const actualShift = shift % puzzle.bitstring_length;
-            newString = currentBit.textContent.slice(actualShift) + currentBit.textContent.slice(0, actualShift);
-            break;
-        }
-
-        case "ROR": {
-            let shift = parseInt(operand);
-            const actualShift = shift % puzzle.bitstring_length;
-            newString = currentBit.textContent.slice(-actualShift) + currentBit.textContent.slice(0, -actualShift);
-            break;
-        }
-        }
-        
-        currentBit.textContent = newString;
-        opcount.textContent--;
-
-        if (currentBit.textContent == targetBit.textContent) {
-            const modalOverlay = document.querySelector(".modal-overlay");
-            const victoryModal = document.querySelector(".victory-modal");
-            modalOverlay.classList.remove("hidden");
-            victoryModal.classList.remove("hidden");
-        
-        } else if (opcount.textContent == 0) {
-            const modalOverlay = document.querySelector(".modal-overlay");
-            const gameOverModal = document.querySelector(".gameover-modal");
-            modalOverlay.classList.remove("hidden");
-            gameOverModal.classList.remove("hidden");                    
-        }
-    }
-})();
-
-const resetLevel = document.querySelectorAll(".reset-btn");
-const toPuzzlePage = document.querySelectorAll(".to-puzzle-btn");
-
-resetLevel.forEach(btn => {
-    btn.addEventListener("click", () => {
-        window.location.reload();
-    });
-})  
-toPuzzlePage.forEach(btn => {
-    btn.addEventListener("click", () => {
-        window.location.href = "./../puzzle-levels/"
-    });
-})

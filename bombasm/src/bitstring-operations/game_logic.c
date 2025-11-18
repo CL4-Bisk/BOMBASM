@@ -57,6 +57,9 @@ char* bitStringOperations(char *a, char *b, char *op, int bitWidth) {
   B = binaryStringToInt(b);
 
   switch (bitWidth) {
+       case 1:
+          mask = 0x1;        // 0000 0001
+          break;
       case 4:
           mask = 0xF;        // 0000 1111
           break;
@@ -84,20 +87,19 @@ char* bitStringOperations(char *a, char *b, char *op, int bitWidth) {
   } else if (strcmp(op, "XOR") == 0) {
       result = A ^ B;
   } else if (strcmp(op, "NOT") == 0) {
-      result = ~A & mask; // re-mask to remove extra bits
+      result = ~A & mask; 
   } else if (strcmp(op, "SHL") == 0) {
       result = (A << B) & mask;
   } else if (strcmp(op, "SHR") == 0) {
       result = (A >> B) & mask;
   } else if (strcmp(op, "ROL") == 0) {
-      uint8_t shift = B % bitWidth; // prevent over-rotation (maguba ang rotate)
+      uint8_t shift = B % bitWidth; 
       result = ((A << shift) | (A >> (bitWidth - shift))) & mask;
   } else if (strcmp(op, "ROR") == 0) {
       uint8_t shift = B % bitWidth;
       result = ((A >> shift) | (A << (bitWidth - shift))) & mask;
   } else {
-      result = 0; // invalid op
+      result = 0; 
   }
-
   return intToBinaryString(result, bitWidth);
 }

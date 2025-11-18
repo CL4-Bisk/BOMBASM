@@ -6,24 +6,36 @@
 #include <emscripten/html5.h>
 #include <emscripten.h>
 
-// struct tutorial_level {
-//     char *label;
-//     char *title;
-//     int  *bit_array;
-//     char **operation_set;
-//     char *instruction;
-// }; 
-
-struct TutorialLevel{
+typedef struct {
     char *title;
     char *operator;
     int  bitWidth;
     char *startBitstring;
     char **operation_set;
+    int opcount;
     char *description;
+} TutorialLevel;
+
+static char *ops0[] = {"AND 0", "AND 1"};
+static char *ops1[] = {"OR 0", "OR 1"};
+static char *ops2[] = {"NOT"};
+static char *ops3[] = {"XOR 0", "XOR 1"};
+static char *ops4[] = {"SHL 1", "SHR 1", "SHL 2", "SHL 2"};
+static char *ops5[] = {"ROL 1", "ROR 1", "ROR 2", "ROR 2"};
+
+static TutorialLevel tutorial_levels[] = {
+    {"AND Operator", "AND", 1, "1", ops0, 2, "This is the AND Operator."},
+    {"OR Operator",  "OR",  1, "0", ops1, 2, "This is the OR Operator."},
+    {"NOT Operator", "NOT", 1, "0", ops2, 1, "This is the NOT Operator."},
+    {"XOR Operator", "XOR", 1, "0", ops3, 2, "This is the XOR Operator."},
+    {"Shift Operators", "SHL, SHR", 8, "01000101", ops4, 4, "These are the Shift Operators."},
+    {"Rotate Operators", "ROL, ROR", 8, "01000101", ops5, 4, "These are the Rotate Operators."},
 };
 
-struct TutorialLevel tutorial_levels[8];
+EMSCRIPTEN_KEEPALIVE
+int getTutorialLevelCount() {
+    return sizeof(tutorial_levels) / sizeof(tutorial_levels[0]);
+}
 
 EMSCRIPTEN_KEEPALIVE
 char* getTutorialLevelTitle(int index) {
@@ -46,297 +58,30 @@ char* getTutorialLevelStartBitstring(int index) {
 }
 
 EMSCRIPTEN_KEEPALIVE
-char** getTutorialLevelOperationSet(int index) {
-    return tutorial_levels[index].operation_set;
-}
-
-EMSCRIPTEN_KEEPALIVE
 char* getTutorialLevelDescription(int index) {
     return tutorial_levels[index].description;
 }
 
-// struct tutorial_level create_tutorial_level(char *level_label, char *level_title, int *bit_array_ptr, 
-//                                             char **operation_set_ptr,  char *instruction) {
-//     struct tutorial_level level;
-//     level.label = level_label;
-//     level.title = level_title;
-//     level.bit_array = bit_array_ptr;
-//     level.operation_set = operation_set_ptr;
-//     level.instruction = instruction;
-//     return level;
-// }
+char* getTutorialLevelOperations(int index) {
+    TutorialLevel *lvl = &tutorial_levels[index];
 
-int main() {    
-    tutorial_levels[0].title = "AND Operator";
-    tutorial_levels[0].operator = "AND";
-    tutorial_levels[0].bitWidth = 2;
-    tutorial_levels[0].startBitstring = "00";
-    char *ops0[] = {"AND 00", "AND 01", "AND 10", "AND 11"};
-    tutorial_levels[0].operation_set = ops0;
-    tutorial_levels[0].description = "This is the AND Operator.";
+    int totalLen = 0;
+    for (int i = 0; i < lvl->opcount; i++) {
+        totalLen += strlen(lvl->operation_set[i]);
+    }
+    totalLen += lvl->opcount; 
 
-    tutorial_levels[1].title = "OR Operator";
-    tutorial_levels[1].operator = "OR";
-    tutorial_levels[1].bitWidth = 2;
-    tutorial_levels[1].startBitstring = "00";
-    char *ops1[] = {"OR 00", "OR 01", "OR 10", "OR 11"};
-    tutorial_levels[1].operation_set = ops1;
-    tutorial_levels[1].description = "This is the OR Operator.";
+    char *buffer = (char*)malloc(totalLen);
+    buffer[0] = '\0';
 
-    tutorial_levels[2].title = "NOT Operator";
-    tutorial_levels[2].operator = "NOT";
-    tutorial_levels[2].bitWidth = 2;
-    tutorial_levels[2].startBitstring = "00";
-    char *ops2[] = {"NOT 00", "NOT 01", "NOT 10", "NOT 11"};
-    tutorial_levels[2].operation_set = ops2;
-    tutorial_levels[2].description = "This is the NOT Operator.";
+    for (int i = 0; i < lvl->opcount; i++) {
+        strcat(buffer, lvl->operation_set[i]);
+        if (i < lvl->opcount - 1) strcat(buffer, ",");
+    }
 
-    tutorial_levels[3].title = "XOR Operator";
-    tutorial_levels[3].operator = "XOR";
-    tutorial_levels[3].bitWidth = 2;
-    tutorial_levels[3].startBitstring = "00";
-    char *ops3[] = {"XOR 00", "XOR 01", "XOR 10", "XOR 11"};
-    tutorial_levels[3].operation_set = ops2;
-    tutorial_levels[3].description = "This is the XOR Operator.";
-
-    tutorial_levels[4].title = "SHL Operator";
-    tutorial_levels[4].operator = "SHL";
-    tutorial_levels[4].bitWidth = 2;
-    tutorial_levels[4].startBitstring = "00";
-    char *ops4[] = {"SHL 00", "SHL 01", "SHL 10", "SHL 11"};
-    tutorial_levels[4].operation_set = ops3;
-    tutorial_levels[4].description = "This is the SHL Operator.";
-
-    tutorial_levels[5].title = "SHR Operator";
-    tutorial_levels[5].operator = "SHR";
-    tutorial_levels[5].bitWidth = 2;
-    tutorial_levels[5].startBitstring = "00";
-    char *ops5[] = {"SHR 00", "SHR 01", "SHR 10", "SHR 11"};
-    tutorial_levels[5].operation_set = ops4;
-    tutorial_levels[5].description = "This is the SHR Operator.";
-
-    tutorial_levels[6].title = "ROL Operator";
-    tutorial_levels[6].operator = "ROL";
-    tutorial_levels[6].bitWidth = 2;
-    tutorial_levels[6].startBitstring = "00";
-    char *ops6[] = {"ROL 00", "ROL 01", "ROL 10", "ROL 11"};
-    tutorial_levels[6].operation_set = ops5;
-    tutorial_levels[6].description = "This is the ROL Operator.";
-
-    tutorial_levels[7].title = "ROR Operator";
-    tutorial_levels[7].operator = "ROR";
-    tutorial_levels[7].bitWidth = 2;
-    tutorial_levels[7].startBitstring = "00";
-    char *ops7[] = {"ROR 00", "ROR 01", "ROR 10", "ROR 11"};
-    tutorial_levels[7].operation_set = ops6;
-    tutorial_levels[7].description = "This is the ROR Operator.";
-
-    // int list_size = 1;
-    // tutorial_level *ptr = malloc(sizeof(tutorial_level) * list_size);
-    
-    // int *bits0[2];
-    // bits0[0] = 0;
-    // bits0[1] = 1;
-
-    // int *bits1[2];
-    // bits0[0] = 10;
-    // bits0[1] = 11;
-
-    // int *bits2[4];
-    // bits0[0] = 100;
-    // bits0[1] = 101;
-    // bits0[2] = 110;
-    // bits0[3] = 111;
-
-    // int *bits3[8];
-    // bits0[0] = 1000;
-    // bits0[1] = 1001;
-    // bits0[2] = 1010;
-    // bits0[3] = 1011;
-    // bits0[4] = 1100;
-    // bits0[5] = 1101;
-    // bits0[6] = 1110;
-    // bits0[7] = 1111;
-
-    // char **ops0 = malloc(sizeof(char*) * 4);
-    // ops0[0] = "AND 00";
-    // ops0[1] = "AND 01";
-    // ops0[2] = "AND 10";
-    // ops0[3] = "AND 11";
-
-    // char **ops1 = malloc(sizeof(char*) * 4);
-    // ops1[0] = "OR 00";
-    // ops1[1] = "OR 01";
-    // ops1[2] = "OR 10";
-    // ops1[3] = "OR 11";
-
-    // char **ops2 = malloc(sizeof(char*) * 4);
-    // ops2[0] = "XOR 00";
-    // ops2[1] = "XOR 01";
-    // ops2[2] = "XOR 10";
-    // ops2[3] = "XOR 11";
-
-    // char **ops3 = malloc(sizeof(char*) * 4);
-    // ops3[0] = "SHL 00";
-    // ops3[1] = "SHL 01";
-    // ops3[2] = "SHL 10";
-    // ops3[3] = "SHL 11";
-
-    // char **ops4 = malloc(sizeof(char*) * 4);
-    // ops4[0] = "SHR 00";
-    // ops4[1] = "SHR 01";
-    // ops4[2] = "SHR 10";
-    // ops4[3] = "SHR 11";
-
-    // char **ops5 = malloc(sizeof(char*) * 4);
-    // ops5[0] = "ROL 00";
-    // ops5[1] = "ROL 01";
-    // ops5[2] = "ROL 10";
-    // ops5[3] = "ROL 11";
-
-    // char **ops6 = malloc(sizeof(char*) * 4);
-    // ops6[0] = "ROR 00";
-    // ops6[1] = "ROR 01";
-    // ops6[2] = "ROR 10";
-    // ops6[3] = "ROR 11";
-
-
-    // ptr[0] = create_tutorial_level (
-    //     // "AND",
-    //     // "AND Operator",
-    //     // bits0,
-    //     // ops0,
-    //     // "This is the AND Operator."
-    //     "AND Operator",
-    //     "AND",
-    //     2,
-    //     bits0,
-    //     ops0,
-    //     "This is the AND Operator."
-    // );
-
-    // ptr[1] = create_tutorial_level (
-    //     "OR Operator",
-    //     "OR",
-    //     2,
-    //     bits0,
-    //     ops1,
-    //     "This is the OR Operator."
-    // )
-
-    // ptr[2] = create_tutorial_level (
-    //     "XOR Operator",
-    //     "XOR",
-    //     2,
-    //     bits0,
-    //     ops2,
-    //     "This is the XOR Operator."
-    // )
-
-    // ptr[3] = create_tutorial_level (
-    //     "SHL Operator",
-    //     "SHL",
-    //     2,
-    //     bits0,
-    //     ops3,
-    //     "This is the SHL Operator."
-    // )
-
-    // ptr[4] = create_tutorial_level (
-    //     "SHR Operator",
-    //     "SHR",
-    //     2,
-    //     bits0,
-    //     ops4,
-    //     "This is the SHR Operator."
-    // )
-
-    // ptr[5] = create_tutorial_level (
-    //     "ROL Operator",
-    //     "ROL",
-    //     2,
-    //     bits0,
-    //     ops5,
-    //     "This is the ROL Operator."
-    // )
-
-    // ptr[6] = create_tutorial_level (
-    //     "ROR Operator",
-    //     "ROR",
-    //     2,
-    //     bits0,
-    //     ops6,
-    //     "This is the ROR Operator."
-    // )
-
-
-    // puzzle_level *puz_ptr = malloc(sizeof(puzzle_level) * list_size);
-
-    // puz_ptr[0] = create_puzzle_level (
-    //     1,
-    //     4,
-    //     "0000",
-    //     "0001",
-    //     ops0,
-    //     5
-    // )
-
-    // puz_ptr[1] = create_puzzle_level (
-    //     2,
-    //     4,
-    //     "0010",
-    //     "0100",
-    //     ops1,
-    //     5
-    // )
-
-    // puz_ptr[2] = create_puzzle_level (
-    //     3,
-    //     4,
-    //     "0100",
-    //     "1000",
-    //     ops0,
-    //     5
-    // )
-
-
-    return 0;
-
+    return buffer;
 }
 
-
-// void stringToUpper(char *str) {
-//     char *ptr = str;
-//     while (*ptr) {
-//         *ptr = toupper((unsigned char)*ptr);
-//         ptr++;
-//     }
-// }
-
-// EMSCRIPTEN_KEEPALIVE
-// int bitStringOperations(int a, int b, char *op) {
-//     int result = 0;
-//     stringToUpper(op);
-
-//     if (strcmp(op, "AND") == 0) {
-//         result = a & b;
-//     } else if (strcmp(op, "OR") == 0) {
-//         result = a | b;
-//     } else if (strcmp(op, "XOR") == 0) {
-//         result = a ^ b;
-//     } else if (strcmp(op, "NOT") == 0) {
-//         result = ~a;
-//     } else if (strcmp(op, "SHL") == 0) {
-//         result = a << b;
-//     } else if (strcmp(op, "SHR") == 0) {
-//         result = a >> b;
-//     } else if (strcmp(op, "ROL") == 0) {
-//         result = (a << b) | (a >> (32 - b));
-//     } else if (strcmp(op, "ROR") == 0) {
-//         result = (a >> b) | (a << (32 - b));
-//     } else {
-//         result = 0;  // unknown op
-//     }
-
-//     return result;
-// }
+int main() {    
+    return 0;
+}

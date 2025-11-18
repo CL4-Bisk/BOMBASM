@@ -1,94 +1,71 @@
-const title         = document.querySelector(".title");
-const subtitle      = document.querySelector(".subtitle");
-const currentBit    = document.querySelector(".current-bitstring-screen");
-const description   = document.querySelector(".description-section .screen")
-const opButtons     = document.querySelector(".main-buttons");
+TutorialLevelsModule().then((Module) => {
+    const getTutorialCount      = Module.cwrap("getTutorialLevelCount", "number", []);
+    const getLevelTitle = Module.cwrap("getTutorialLevelTitle", "string", ["number"])
+    const getLevelOperator = Module.cwrap("getTutorialLevelOperator", "string", ["number"]) 
+    const getBitwidth         = Module.cwrap("getTutorialLevelBitWidth", "number", ["number"]);
+    const getStartBitstring   = Module.cwrap("getTutorialLevelStartBitstring", "string", ["number"]);
+    const getDescription       = Module.cwrap("getTutorialLevelDescription", "string", ["number"]);
+    const getOpCount          = Module.cwrap("getTutorialLevelOperationCount", "number", ["number"]);
+    const getOperations       = Module.cwrap("getTutorialLevelOperations", "string", ["number"]);
 
-(async () => {
+    const title         = document.querySelector(".title");
+    const subtitle      = document.querySelector(".subtitle");
+    const currentBit    = document.querySelector(".current-bitstring-screen");
+    const description   = document.querySelector(".description-section .screen");
+    const opButtons     = document.querySelector(".main-buttons");
+
     const params = new URLSearchParams(document.location.search);
-    const lvl = params.get("level");
+    const index = parseInt(params.get("level"));
 
-    const response = await fetch('./../json/tutorial-levels.json'); 
-    const tutorials = await response.json();
-    let tutorial;
-    tutorials.forEach(t => 
-        (t.number == lvl) ? tutorial = t : {}
-    )
 
-    title.textContent       = tutorial.title;
-    subtitle.textContent    = tutorial.subtitle;
-    currentBit.textContent  = tutorial.start_bitstring; 
-    description.textContent = tutorial.desc;
+    title.textContent       = getLevelTitle(index);
+    subtitle.textContent    = getLevelOperator(index);
+    currentBit.textContent  = getStartBitstring(index); 
+    description.textContent = getDescription(index);
 
-    tutorial.operations.forEach(op => {
-        const button = document.createElement("button");
-        button.className = "operation-btn";
-        button.textContent = op;
-        button.addEventListener("click", () => doBitOperation(op));
-        opButtons.appendChild(button);
+    GameLogicModule().then((Module) => { 
+        const doBitOperation = Module.cwrap(
+            "bitStringOperations", "string", ["string", "string", "string", "number"]
+        );
+        
+        const operations = getOperations(index).split(",");
+        operations.forEach(op => {
+            const button = document.createElement("button");
+            button.className = "operation-btn";
+            button.textContent = op;
+
+            let [operation, operand] = op.split(" ");
+            if (operand === undefined) operand = "";
+
+            button.addEventListener("click", () => { 
+                currentBit.textContent = doBitOperation(
+                    currentBit.textContent, 
+                    operand,
+                    operation,
+                    getBitwidth(index)
+                );
+                opcount.textContent = parseInt(opcount.textContent) - 1;
+                
+            });
+
+            opButtons.appendChild(button);
+        });
+
+        
     });
 
-    function doBitOperation(op) {
-        [operator, operand] = op.split(" ");
+    const resetLevel = document.querySelectorAll(".reset-btn");
+    resetLevel.forEach(btn => {
+        btn.addEventListener("click", () => {
+            window.location.reload();
+        });
+    })  
 
-        let newString = ""; 
-        switch (operator) {
-        case "AND": 
-            for (let i = 0; i < tutorial.bitstring_length; i++) {
-                newString += (operand[i] & currentBit.textContent[i]);
-            }
-            break;
-        case "OR": 
-            for (let i = 0; i < tutorial.bitstring_length; i++) {
-                newString += (operand[i] | currentBit.textContent[i]);
-            }
-            break;
-        case "NOT": 
-            for (let i = 0; i < tutorial.bitstring_length; i++) {
-                newString += (currentBit.textContent[i] ^ 1);
-            }
-            break;
-        case "XOR": 
-            for (let i = 0; i < tutorial.bitstring_length; i++) {
-                newString += (operand[i] ^ currentBit.textContent[i]);
-            }
-            break;
-        
-        case "SHL": {
-            let shift = parseInt(operand);
-            newString = currentBit.textContent.slice(shift) + "0".repeat(shift);
-            break;
-        }
+    const toPuzzlePage = document.querySelectorAll(".to-puzzle-btn");
+    toPuzzlePage.forEach(btn => {
+        btn.addEventListener("click", () => {
+            window.location.href = "./../puzzle-levels/"
+        });
+    })
+});
 
-        case "SHR": { 
-            let shift = parseInt(operand);
-            newString = "0".repeat(shift) + currentBit.textContent.slice(0, tutorial.bitstring_length - shift);
-            break;
-        }
-
-        case "ROL": {
-            let shift = parseInt(operand);
-            const actualShift = shift % tutorial.bitstring_length;
-            newString = currentBit.textContent.slice(actualShift) + currentBit.textContent.slice(0, actualShift);
-            break;
-        }
-
-        case "ROR": {
-            let shift = parseInt(operand);
-            const actualShift = shift % tutorial.bitstring_length;
-            newString = currentBit.textContent.slice(-actualShift) + currentBit.textContent.slice(0, -actualShift);
-            break;
-        }
-        }
-        
-        currentBit.textContent = newString;
-    }
-})();
-
-const resetLevel = document.querySelectorAll(".reset-btn");
-
-resetLevel.forEach(btn => {
-    btn.addEventListener("click", () => {
-        window.location.reload();
-    });
-})  

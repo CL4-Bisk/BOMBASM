@@ -10,23 +10,20 @@ document.querySelectorAll(".level-btn").forEach(element => {
     });
 });
 
-const tutorialLevelDisplay = document.querySelector(".levels");
-tutorialLevelDisplay.innerHTML = "";    
-(async () => {
-    const response = await fetch('./../json/tutorial-levels.json'); 
-    const tutorials = await response.json();
 
-    tutorials.forEach(level => {
-        const locked = (level.locked) ? "disabled": "";
-        tutorialLevelDisplay.innerHTML += `
-        <button id=${level.number} class="level-btn" ${locked}>${level.title}</button>
-        `;    
-    })
-
-    tutorialLevelDisplay.querySelectorAll(".level-btn").forEach(level => {
-    level.addEventListener("click", () => {
-        window.location.href = `./../tutorial/?level=${level.id}`;
+TutorialLevelsModule().then((Module) => {
+    const tutorialLevelDisplay = document.querySelector(".levels");
+    const getLevelCount = Module.cwrap("getTutorialLevelCount", "number", []);
+    const getLevelOperator = Module.cwrap("getTutorialLevelOperator", "string", ["number"]);
+    for (let i = 0; i < getLevelCount(); i++) {
+        const button = document.createElement("button");
+        button.className = "level-btn";
+        button.textContent = getLevelOperator(i);
+        button.addEventListener("click", () => {
+            window.location.href= `./../tutorial/?level=${i}`;
         });
-    });
-})();
+        tutorialLevelDisplay.appendChild(button);
+    }
+});
+
 

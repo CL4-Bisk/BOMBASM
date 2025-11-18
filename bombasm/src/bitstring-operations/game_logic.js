@@ -3,7 +3,7 @@
 
 // Single threaded MINIMAL_RUNTIME programs do not need access to
 // document.currentScript, so a simple export declaration is enough.
-var PuzzleLevelsModule = (() => {
+var GameLogicModule = (() => {
   // When MODULARIZE this JS may be executed later,
   // after document.currentScript is gone, so we save it.
   // In EXPORT_ES6 mode we can just use 'import.meta.url'.
@@ -567,7 +567,7 @@ function createExportWrapper(name, nargs) {
 var wasmBinaryFile;
 
 function findWasmBinary() {
-  return locateFile('script.wasm');
+  return locateFile('game_logic.wasm');
 }
 
 function getBinarySync(file) {
@@ -1574,16 +1574,7 @@ function checkIncomingModuleAPI() {
 }
 
 // Imports from the Wasm binary.
-var _getPuzzleLevelCount = Module['_getPuzzleLevelCount'] = makeInvalidEarlyAccess('_getPuzzleLevelCount');
-var _getPuzzleLevelNumber = Module['_getPuzzleLevelNumber'] = makeInvalidEarlyAccess('_getPuzzleLevelNumber');
-var _getPuzzleLevelBitWidth = Module['_getPuzzleLevelBitWidth'] = makeInvalidEarlyAccess('_getPuzzleLevelBitWidth');
-var _getPuzzleLevelTitle = Module['_getPuzzleLevelTitle'] = makeInvalidEarlyAccess('_getPuzzleLevelTitle');
-var _getPuzzleLevelSubtitle = Module['_getPuzzleLevelSubtitle'] = makeInvalidEarlyAccess('_getPuzzleLevelSubtitle');
-var _getPuzzleLevelStartBitstring = Module['_getPuzzleLevelStartBitstring'] = makeInvalidEarlyAccess('_getPuzzleLevelStartBitstring');
-var _getPuzzleLevelGoalBitstring = Module['_getPuzzleLevelGoalBitstring'] = makeInvalidEarlyAccess('_getPuzzleLevelGoalBitstring');
-var _getPuzzleLevelOperationCount = Module['_getPuzzleLevelOperationCount'] = makeInvalidEarlyAccess('_getPuzzleLevelOperationCount');
-var _getPuzzleLevelOperations = Module['_getPuzzleLevelOperations'] = makeInvalidEarlyAccess('_getPuzzleLevelOperations');
-var _main = makeInvalidEarlyAccess('_main');
+var _bitStringOperations = Module['_bitStringOperations'] = makeInvalidEarlyAccess('_bitStringOperations');
 var _fflush = makeInvalidEarlyAccess('_fflush');
 var _strerror = makeInvalidEarlyAccess('_strerror');
 var _emscripten_stack_get_end = makeInvalidEarlyAccess('_emscripten_stack_get_end');
@@ -1598,26 +1589,8 @@ var __indirect_function_table = makeInvalidEarlyAccess('__indirect_function_tabl
 var wasmMemory = makeInvalidEarlyAccess('wasmMemory');
 
 function assignWasmExports(wasmExports) {
-  assert(typeof wasmExports['getPuzzleLevelCount'] != 'undefined', 'missing Wasm export: getPuzzleLevelCount');
-  _getPuzzleLevelCount = Module['_getPuzzleLevelCount'] = createExportWrapper('getPuzzleLevelCount', 0);
-  assert(typeof wasmExports['getPuzzleLevelNumber'] != 'undefined', 'missing Wasm export: getPuzzleLevelNumber');
-  _getPuzzleLevelNumber = Module['_getPuzzleLevelNumber'] = createExportWrapper('getPuzzleLevelNumber', 1);
-  assert(typeof wasmExports['getPuzzleLevelBitWidth'] != 'undefined', 'missing Wasm export: getPuzzleLevelBitWidth');
-  _getPuzzleLevelBitWidth = Module['_getPuzzleLevelBitWidth'] = createExportWrapper('getPuzzleLevelBitWidth', 1);
-  assert(typeof wasmExports['getPuzzleLevelTitle'] != 'undefined', 'missing Wasm export: getPuzzleLevelTitle');
-  _getPuzzleLevelTitle = Module['_getPuzzleLevelTitle'] = createExportWrapper('getPuzzleLevelTitle', 1);
-  assert(typeof wasmExports['getPuzzleLevelSubtitle'] != 'undefined', 'missing Wasm export: getPuzzleLevelSubtitle');
-  _getPuzzleLevelSubtitle = Module['_getPuzzleLevelSubtitle'] = createExportWrapper('getPuzzleLevelSubtitle', 1);
-  assert(typeof wasmExports['getPuzzleLevelStartBitstring'] != 'undefined', 'missing Wasm export: getPuzzleLevelStartBitstring');
-  _getPuzzleLevelStartBitstring = Module['_getPuzzleLevelStartBitstring'] = createExportWrapper('getPuzzleLevelStartBitstring', 1);
-  assert(typeof wasmExports['getPuzzleLevelGoalBitstring'] != 'undefined', 'missing Wasm export: getPuzzleLevelGoalBitstring');
-  _getPuzzleLevelGoalBitstring = Module['_getPuzzleLevelGoalBitstring'] = createExportWrapper('getPuzzleLevelGoalBitstring', 1);
-  assert(typeof wasmExports['getPuzzleLevelOperationCount'] != 'undefined', 'missing Wasm export: getPuzzleLevelOperationCount');
-  _getPuzzleLevelOperationCount = Module['_getPuzzleLevelOperationCount'] = createExportWrapper('getPuzzleLevelOperationCount', 1);
-  assert(typeof wasmExports['getPuzzleLevelOperations'] != 'undefined', 'missing Wasm export: getPuzzleLevelOperations');
-  _getPuzzleLevelOperations = Module['_getPuzzleLevelOperations'] = createExportWrapper('getPuzzleLevelOperations', 1);
-  assert(typeof wasmExports['main'] != 'undefined', 'missing Wasm export: main');
-  _main = createExportWrapper('main', 2);
+  assert(typeof wasmExports['bitStringOperations'] != 'undefined', 'missing Wasm export: bitStringOperations');
+  _bitStringOperations = Module['_bitStringOperations'] = createExportWrapper('bitStringOperations', 4);
   assert(typeof wasmExports['fflush'] != 'undefined', 'missing Wasm export: fflush');
   _fflush = createExportWrapper('fflush', 1);
   assert(typeof wasmExports['strerror'] != 'undefined', 'missing Wasm export: strerror');
@@ -1790,10 +1763,10 @@ for (const prop of Object.keys(Module)) {
 
 // Export using a UMD style export, or ES6 exports if selected
 if (typeof exports === 'object' && typeof module === 'object') {
-  module.exports = PuzzleLevelsModule;
+  module.exports = GameLogicModule;
   // This default export looks redundant, but it allows TS to import this
   // commonjs style module.
-  module.exports.default = PuzzleLevelsModule;
+  module.exports.default = GameLogicModule;
 } else if (typeof define === 'function' && define['amd'])
-  define([], () => PuzzleLevelsModule);
+  define([], () => GameLogicModule);
 

@@ -1,91 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="index.css">
-    <title> Tutorial Levels</title>
-    <script src="../../src/get-tutorial-levels/script.js"></script>
-</head>
-<body>
-    <div class="overlay"></div>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="index.css">
+        <title> Tutorial Levels</title>
+        <script src="../../src/get-tutorial-levels/script.js"></script>
+    </head>
+    <body>
+        <div class="overlay"></div>
 
-    <main class="tutorial-levels">
-        <header>
-            <div class="left">
-                <h1 class="title">Bombasm</h1>
-                <p class="subtitle">Tutorials</p>
-            </div>
-            <div class="right">
-                <a href="./../">← Home</a>
-            </div>
-        </header>
-        <section class="body">
-            <section class="levels">
+        <main class="tutorial-levels">
+            <header>
+                <div class="left">
+                    <h1 class="title">Bombasm</h1>
+                    <p class="subtitle">Tutorials</p>
+                </div>
+                <div class="right">
+                    <a href="./../">← Home</a>
+                </div>
+            </header>
+            <section class="body">
+                <section class="levels">
+                </section>
+                <button class="to-puzzle-btn">Go to Puzzles</button>
             </section>
-            <button class="to-puzzle-btn">Go to Puzzles</button>
-
-            <script>
-                const tutorAND = document.getElementById("and");
-                const tutorOR = document.getElementById("or");
-                const tutorNOT = document.getElementById("not");
-                const tutorXOR = document.getElementById("xor");
-                const tutorSHIFTS = document.getElementById("shift");
-                const tutorROTATES = document.getElementById("rotate");
-
-                const AND = 0;
-                const OR = 1;
-                const NOT = 2;
-                const XOR = 3;
-                const SHIFTS = 4;
-                const ROTATES = 5;
-
-                tutorAND.addEventListener("click", e => {
-                    e.preventDefault();
-                    var ANDTitle = Module.ccall(
-                        "getTutorialLevelTitle", // function name
-                        "string", // return type
-                        ["number"], // argument types
-                        [AND] // arguments
-                    );
-                    var ANDOperator = Module.ccall(
-                        "getTutorialLevelOperator", // function name
-                        "string", // return type
-                        ["number"], // argument types
-                        [AND] // arguments
-                    );
-                    var ANDBitWidth = Module.ccall(
-                        "getTutorialLevelBitWidth", // function name
-                        "number", // return type
-                        ["number"], // argument types
-                        [AND] // arguments
-                    );
-                    var ANDStartBitstring = Module.ccall(
-                        "getTutorialLevelStartBitstring", // function name
-                        "string", // return type
-                        ["number"], // argument types
-                        [AND] // arguments
-                    );
-                    var ANDOperationSet = Module.ccall(
-                        "getTutorialLevelOperationSet", // function name
-                        "string", // return type
-                        ["number"], // argument types
-                        [AND] // arguments
-                    );
-                    var ANDDescription = Module.ccall(
-                        "getTutorialLevelDescription", // function name
-                        "string", // return type
-                        ["number"], // argument types
-                        [AND] // arguments
-                    );
-                    console.log(ANDTitle, ANDOperator, ANDBitWidth, ANDStartBitstring, ANDOperationSet, ANDDescription);
-                });
-
-
-            </script>  
-
-        </section>
-    </main>    
-    <script src="index.js"></script>
-</body>
-</html>
+        </main>    
+        <script src="index.js"></script>
+    </body>
+    </html>

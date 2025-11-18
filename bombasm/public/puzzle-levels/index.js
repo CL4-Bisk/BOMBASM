@@ -3,23 +3,18 @@ document.querySelector(".to-tutorial-btn").addEventListener("click", e => {
     window.location.href = "./../tutorial-levels/"
 })
 
-const puzzleLevelDisplay = document.querySelector(".levels");
-puzzleLevelDisplay.innerHTML = "";    
-(async () => {
-    const response = await fetch('./../json/puzzle-levels.json'); 
-    const puzzles = await response.json();
-
-    puzzles.forEach(level => {
-        const locked = (level.locked) ? "disabled": "";
-        puzzleLevelDisplay.innerHTML += `
-        <button id=${level.number} class="level-btn" ${locked}>${level.number}</button>
-        `;    
-    })
-
-    puzzleLevelDisplay.querySelectorAll(".level-btn").forEach(level => {
-    level.addEventListener("click", () => {
-        window.location.href = `./../puzzle/?level=${level.id}`;
+PuzzleLevelsModule().then((Module) => {
+    const puzzleLevelDisplay = document.querySelector(".levels");
+    const getLevelNumber = Module.cwrap("getPuzzleLevelNumber", "number", ["number"]);
+    const puzzleCount = Module.cwrap("getPuzzleLevelCount", "number", []);
+    for (let i = 0; i < puzzleCount(); i++) {
+        const button = document.createElement("button");
+        button.id = getLevelNumber(i);
+        button.className = "level-btn";
+        button.textContent = getLevelNumber(i);
+        button.addEventListener("click", () => {
+            window.location.href= `./../puzzle/?level=${i}`;
         });
-    });
-})();
-
+        puzzleLevelDisplay.appendChild(button);
+    }
+});
