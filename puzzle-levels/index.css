@@ -1,0 +1,53 @@
+@import url(./../global.css);
+
+.puzzle-levels {
+    width: 1000px;
+    height: 700px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 64px;
+    background-color: var(--color-very-light);
+}
+.puzzle-levels header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-self: baseline;
+    margin-bottom: 32px;
+}
+.puzzle-levels .title {
+    font-size: 40px;
+    font-weight: var(--fw-bold);
+}
+.puzzle-levels .subtitle {
+    font-size: 20px;
+    color: var(--color-dark);
+}
+.puzzle-levels .body {
+    width: 80%;
+}
+.puzzle-levels .levels {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; 
+    margin-block: 32px 64px;
+}
+.puzzle-levels .level-btn {
+    width: 90px;
+    margin: 16px 32px;
+    aspect-ratio: 1/1;
+    font-size: 20px;   
+}
+.puzzle-levels .to-tutorial-btn {
+    width: 70%;
+    margin-inline: auto;
+    padding: 8px 16px;
+    background-color: var(--color-dark);
+    color: var(--color-white); 
+}
