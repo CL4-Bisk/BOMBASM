@@ -1,3 +1,9 @@
+import addTypeWriterEffect from './../global.js'
+
+(async () => {
+    await addTypeWriterEffect(".desc", "Welcome to the Tutorial Levels :)")
+})()
+
 document.querySelector(".home-btn").addEventListener("click", e => {
     e.preventDefault();
     window.location.href = "./../"
@@ -14,10 +20,10 @@ document.querySelectorAll(".level-btn").forEach(element => {
     });
 });
 
-
 TutorialLevelsModule().then((Module) => {
     const tutorialLevelDisplay = document.querySelector(".levels");
     const getLevelCount = Module.cwrap("getTutorialLevelCount", "number", []);
+    const getLevelDesc = Module.cwrap("getTutorialLevelDescription", "string", ["number"])
     const getLevelOperator = Module.cwrap("getTutorialLevelOperator", "string", ["number"]);
     for (let i = 0; i < getLevelCount(); i++) {
         const button = document.createElement("button");
@@ -26,6 +32,9 @@ TutorialLevelsModule().then((Module) => {
         button.addEventListener("click", () => {
             window.location.href= `./../tutorial/?level=${i}`;
         });
+        button.addEventListener("mouseover", async () => {
+            await addTypeWriterEffect(".desc", getLevelDesc(i))
+        })
         tutorialLevelDisplay.appendChild(button);
     }
 });

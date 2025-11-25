@@ -1,17 +1,5 @@
 @import url("global.css");
 
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.1);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
 body {
     overflow: hidden;
 }
@@ -47,7 +35,7 @@ body {
     width: 900px;
     opacity: 60%;
     z-index: 1;
-    animation: pulse 5s infinite;
+    animation: pulse 3s infinite;
 }
 
 .game-start-menu {
@@ -87,11 +75,16 @@ body {
     letter-spacing: 0.2px;
 }
 .game-start-menu button {
+    position: absolute;
+    bottom: 90px;
+    left: calc(50% - 100px);
     width: 200px;
-    margin: 105px auto;
     padding: 8px 16px;
     background-color: var(--color-dark);
     font-size: 16px;
     color: var(--color-white); 
     border-width: 4px;
+}
+.game-start-menu button:hover {
+    filter: brightness(150%);    
 }

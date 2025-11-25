@@ -1,3 +1,7 @@
+import addTypeWriterEffect from './../global.js'
+
+addTypeWriterEffect(".desc", "Welcome to the Puzzle Levels :)")
+
 document.querySelector(".home-btn").addEventListener("click", e => {
     e.preventDefault();
     window.location.href = "./../"
@@ -11,6 +15,7 @@ document.querySelector(".next-btn").addEventListener("click", e => {
 PuzzleLevelsModule().then((Module) => {
     const puzzleLevelDisplay = document.querySelector(".levels");
     const getLevelNumber = Module.cwrap("getPuzzleLevelNumber", "number", ["number"]);
+    const getLevelDesc = Module.cwrap("getPuzzleLevelTitle", "string", ["number"])
     const puzzleCount = Module.cwrap("getPuzzleLevelCount", "number", []);
     for (let i = 0; i < puzzleCount(); i++) {
         const button = document.createElement("button");
@@ -50,9 +55,14 @@ PuzzleLevelsModule().then((Module) => {
         if (unlockedLevels.includes(i)) {
             document.getElementById(i).disabled = false;
             console.log("Level " + i + " is unlocked.");
+            document.getElementById(i).addEventListener("mouseover", async () => {
+                await addTypeWriterEffect(".desc", getLevelDesc(i))
+            })
         } else {
             document.getElementById(i).disabled = true;
-            console.log("Level " + i + " is locked.");
+            document.getElementById(i).addEventListener("mouseover", async () => {
+                await addTypeWriterEffect(".desc", "Level " + i + " is locked")
+            });
         }
     }
 });
