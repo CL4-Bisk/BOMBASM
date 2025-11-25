@@ -1,45 +1,97 @@
 @import url("global.css");
 
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+body {
+    overflow: hidden;
+}
+.bg-image {
+    position: fixed;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -100;
+}
 .overlay {
     width: 100vw;
     height: 100vh;
+    left: 0;
     position: fixed;
-    background-color: var(--color-dark);
-    opacity: 80%;
-    z-index: -1;
+    background-color: var(--color-primary);
+    opacity: 90%;
+    z-index: 0;
 }
+.bg-cover {
+    position: fixed;
+    bottom: 0%;
+    width: 100%;
+    height: 300px;
+    background-color: var(--color-primary);
+    z-index: 0;
+}
+.shadow {
+    position: fixed;
+    bottom: 60px;
+    left: calc(50% - 450px);
+    width: 900px;
+    opacity: 60%;
+    z-index: 1;
+    animation: pulse 5s infinite;
+}
+
 .game-start-menu {
-    width: 800px;
-    height: 500px;
+    width: 650px;
+    height: 585px;
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     text-align: center;
-    background-color: var(--color-very-light);
+    background-image: url(assets/home-comp.png);
+    background-size: cover;
+    color: white;
+    z-index: 2;
 }
 .game-start-menu header {
+    margin-top: 120px;
     margin-bottom: 32px;
 }
+
 .game-start-menu .title {
     font-size: 60px;
     font-weight: var(--fw-bold);
+
 }
 .game-start-menu .subtitle {
     font-size: 20px;
-    color: var(--color-dark);
+    width: 30ch;
+    opacity: 0.4;
 }
 .game-start-menu .body {
-    width: 50ch;
+    width: 35ch;
+    font-size: 20px;
+    letter-spacing: 0.2px;
 }
 .game-start-menu button {
-    width: 100%;
-    margin: 32px auto;
+    width: 200px;
+    margin: 105px auto;
     padding: 8px 16px;
     background-color: var(--color-dark);
+    font-size: 16px;
     color: var(--color-white); 
+    border-width: 4px;
 }

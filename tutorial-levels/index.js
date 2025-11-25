@@ -1,4 +1,8 @@
-document.querySelector(".to-puzzle-btn").addEventListener("click", e => {
+document.querySelector(".home-btn").addEventListener("click", e => {
+    e.preventDefault();
+    window.location.href = "./../"
+})
+document.querySelector(".prev-btn").addEventListener("click", e => {
     e.preventDefault();
     window.location.href = "./../puzzle-levels/"
 })

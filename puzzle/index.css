@@ -1,9 +1,45 @@
 @import url(./../global.css);
 
+body {
+    overflow: hidden;
+}
+.bg-image {
+    position: fixed;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -100;
+}
+.overlay {
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    position: fixed;
+    background-color: var(--color-primary);
+    opacity: 90%;
+    z-index: 0;
+}   
+.bg-cover {
+    position: fixed;
+    bottom: 0%;
+    width: 100%;
+    height: 300px;
+    background-color: var(--color-primary);
+    z-index: 0;
+}
+.shadow {
+    position: fixed;
+    bottom: 2%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1200px;
+    opacity: 60%;
+}
 
 .puzzle-level {
     width: 1000px;
-    height: 700px;
+    height: 621px;
     position: absolute;
     left: 50%;
     top: 50%;
@@ -12,7 +48,8 @@
     flex-direction: column;
     align-items: center;
     padding: 32px;
-    background-color: var(--color-very-light);
+    background-image: url(/assets/level-comp.png);
+    background-size: contain;
 }
 .puzzle-level header {
     width: 100%;

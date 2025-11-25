@@ -1,7 +1,12 @@
-document.querySelector(".to-tutorial-btn").addEventListener("click", e => {
+document.querySelector(".home-btn").addEventListener("click", e => {
+    e.preventDefault();
+    window.location.href = "./../"
+})
+document.querySelector(".next-btn").addEventListener("click", e => {
     e.preventDefault();
     window.location.href = "./../tutorial-levels/"
 })
+
 
 PuzzleLevelsModule().then((Module) => {
     const puzzleLevelDisplay = document.querySelector(".levels");
