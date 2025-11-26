@@ -9,10 +9,25 @@
     --color-very-dark: #333333;
     --color-black: #000000;
 
+    --color-primary: #4A3D56;
+    --color-secondary: #cfc884;
+
     --fw-regular: 400;
     --fw-medium: 500;
     --fw-semi-bold: 600;
     --fw-bold: 700;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.02);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
 
 * {

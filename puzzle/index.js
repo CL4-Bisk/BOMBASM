@@ -1,3 +1,7 @@
+document.querySelector(".to-menu-btn").addEventListener("click", () => {
+    window.location.href = "/../puzzle-levels/";
+})
+
 PuzzleLevelsModule().then((Module) => {
     const getPuzzleCount      = Module.cwrap("getPuzzleLevelCount", "number", []);
     const getLevelNumber      = Module.cwrap("getPuzzleLevelNumber", "number", ["number"]);
@@ -12,8 +16,7 @@ PuzzleLevelsModule().then((Module) => {
     const title         = document.querySelector(".title");
     const subtitle      = document.querySelector(".subtitle");
     const currentBit    = document.querySelector(".current-bitstring-screen");
-    const targetBit     = document.querySelector(".target-section .screen");
-    const previousOp    = document.querySelector(".prev-operation-section .screen");
+    const targetBit     = document.querySelector(".target-section .bitstring");
     const opcount       = document.querySelector(".operation-count-section .screen")
     const opButtons     = document.querySelector(".main-buttons");
 

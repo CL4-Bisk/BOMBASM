@@ -1,3 +1,7 @@
+document.querySelector(".to-menu-btn").addEventListener("click", () => {
+    window.location.href = "./../tutorial-levels/"
+})
+
 TutorialLevelsModule().then((Module) => {
     const getTutorialCount      = Module.cwrap("getTutorialLevelCount", "number", []);
     const getLevelTitle = Module.cwrap("getTutorialLevelTitle", "string", ["number"])
@@ -11,7 +15,7 @@ TutorialLevelsModule().then((Module) => {
     const title         = document.querySelector(".title");
     const subtitle      = document.querySelector(".subtitle");
     const currentBit    = document.querySelector(".current-bitstring-screen");
-    const description   = document.querySelector(".description-section .screen");
+    const description   = document.querySelector(".tutorial-desc .body");
     const opButtons     = document.querySelector(".main-buttons");
 
     const params = new URLSearchParams(document.location.search);
@@ -60,12 +64,5 @@ TutorialLevelsModule().then((Module) => {
             window.location.reload();
         });
     })  
-
-    const toPuzzlePage = document.querySelectorAll(".to-puzzle-btn");
-    toPuzzlePage.forEach(btn => {
-        btn.addEventListener("click", () => {
-            window.location.href = "./../puzzle-levels/"
-        });
-    })
 });
 

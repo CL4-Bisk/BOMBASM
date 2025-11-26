@@ -8,25 +8,26 @@
     <script src="./../src/get-puzzle-levels/script.js"></script>
 </head>
 <body>
+    <img class="bg-image" src="/assets/bg-image.jpg">
+    <figure class="home-btn">
+        <img class="home-icon" src="/assets/home.png">
+        <p>HOME</p>
+    </figure>
+    <figure class="next-btn">
+        <img class="next-icon" src="/assets/next.png">
+        <p>TUTORIALS</p>
+    </figure>
+    
+    <div class="bg-cover"></div>
     <div class="overlay"></div>
+    <img class="shadow" src="/assets/shadow.png">
 
     <main class="puzzle-levels">
-        <header>
-            <div class="left">
-                <h1 class="title">Bombasm</h1>
-                <p class="subtitle">Puzzles</p>
-            </div>
-            <div class="right">
-                <a href="./../">← Home</a>
-            </div>
-        </header>
         <section class="body">
-            <section class="levels">
-
-            </section>            
-            <button class="to-tutorial-btn">Go to Tutorials</button>
+            <section class="desc"></section>
+            <section class="levels"></section>            
         </section>
     </main>      
-    <script src="index.js"></script>
-</body>
+    <script type="module" src="./../global.js"></script>
+    <script type="module" src="index.js"></script></body>
 </html>
