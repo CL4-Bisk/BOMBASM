@@ -11,53 +11,58 @@
 <body >
     <img class="bg-image" src="../assets/bg-image.jpg">
     <div class="bg-cover">     
-        <img class="shadow" src="../assets/shadow.png">
     </div>
+    <img class="shadow" src="../assets/shadow.png">
     <div class="overlay"></div>
     <div class="modal-overlay overlay hidden"></div>
 
-    <main class="puzzle-level hidden">
-        <!-- <header>
-            <div class="left">
+    <figure class="to-menu-btn">
+        <img class="to-menu-icon" src="../assets/prev.png">
+        <p>BACK TO MENU</p>
+    </figure>
+    
+    <main class="puzzle">
+        <section class="puzzle-comp">
+            <div class="current-bitstring-screen-container">
+                <p class="label">Bitstring </p>
+                <div class="current-bitstring-screen"></div>
+            </div>
+
+            <div class="operation-count-section">
+                <span class="screen"></span>Operations Left
+            </div>
+
+            <div class="operation-buttons">
+                <div class="main-buttons"></div>
+                <div class="misc-buttons">
+                    <button class="reset-btn misc-btn">
+                        <img class="reset-icon" src="/assets/reset.png">
+                    </button>
+                </div>
+            </div>                
+        
+        </section>  
+        <section class="puzzle-desc">
+            <header>
                 <h1 class="title">Title</h1>
                 <p class="subtitle">Subtitle</p>
-            </div>
-            <div class="right">
-                <a href="./../puzzle-levels/">← Go to Puzzles</a>
-            </div>  
-        </header> -->
-        <!-- <section class="body">
-            <div class="left">
-                <div class="current-bitstring-screen"></div>
-                <div class="operation-buttons">
-                    <div class="main-buttons"></div>
-                    <div class="misc-buttons">
-                        <button class="reset-btn misc-btn">RESET</button>
-                    </div>
-                </div>
-            </div>
-            <div class="right">                
-                <div class="target-section">
-                    <p class="label">Target Bitstring</p>
-                    <div class="screen"></div>
-                </div>
-                <div class="operation-count-section">
-                    <p class="label">Operations Left</p>
-                    <div class="screen"></div>
-                </div>
-                
-                <div class="bomb"></div>
-            </div>
-        </section> -->
-    </main>      
-
-    <!-- <section class="gameover-modal modal hidden">
+            </header>  
+            <section class="body">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.  Nulla interdum lobortis dictum. Vestibulum aliquam arcu a dui porttitor, eget consequat augue pulvinar. Quisque vel tincidunt urna. Etiam id felis non lacus efficitur tincidunt.
+            </section>
+            <div class="target-section">
+                <p class="label">Known Ransom Key</p>
+                <div class="bitstring"></div>
+            </div>        
+        </section>
+    </main>
+               
+    <section class="gameover-modal modal hidden">
         <header>
             <h1 class="title">GAME OVER</h1>
-            <p class="subtitle">You're dead boss!</p>
+            <p class="subtitle">Your luck has run out!</p>
         </header>
         <section class="body">
-            <p class="desc">Would you like to retry?</p>
             <div class="btn-container">
                 <button class="reset-btn">Try Again</button>
                 <button class="to-puzzle-btn">Back to Puzzles</button>                
@@ -78,7 +83,7 @@
                 <button class="to-puzzle-btn">Back to Puzzles</button>                
             </div>
         </section>
-    </section> -->
+    </section> 
     
     <script src="index.js"></script>
 </body>
