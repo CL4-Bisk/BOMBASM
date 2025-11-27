@@ -1106,7 +1106,6 @@ async function createWasm() {
   var cwrap = (ident, returnType, argTypes, opts) => {
       return (...args) => ccall(ident, returnType, argTypes, args, opts);
     };
-
 // End JS library code
 
 // include: postlibrary.js
@@ -1159,7 +1158,6 @@ Module['FS_createPreloadedFile'] = FS.createPreloadedFile;
 // Begin runtime exports
   Module['ccall'] = ccall;
   Module['cwrap'] = cwrap;
-  Module['UTF8ToString'] = UTF8ToString;
   var missingLibrarySymbols = [
   'writeI53ToI64',
   'writeI53ToI64Clamped',
@@ -1389,6 +1387,7 @@ missingLibrarySymbols.forEach(missingLibrarySymbol)
   'PATH_FS',
   'UTF8Decoder',
   'UTF8ArrayToString',
+  'UTF8ToString',
   'stringToUTF8Array',
   'stringToUTF8',
   'lengthBytesUTF8',
@@ -1581,7 +1580,9 @@ var _getPuzzleLevelTitle = Module['_getPuzzleLevelTitle'] = makeInvalidEarlyAcce
 var _getPuzzleLevelSubtitle = Module['_getPuzzleLevelSubtitle'] = makeInvalidEarlyAccess('_getPuzzleLevelSubtitle');
 var _getPuzzleLevelStartBitstring = Module['_getPuzzleLevelStartBitstring'] = makeInvalidEarlyAccess('_getPuzzleLevelStartBitstring');
 var _getPuzzleLevelGoalBitstring = Module['_getPuzzleLevelGoalBitstring'] = makeInvalidEarlyAccess('_getPuzzleLevelGoalBitstring');
-var _getPuzzleLevelOperationCount = Module['_getPuzzleLevelOperationCount'] = makeInvalidEarlyAccess('_getPuzzleLevelOperationCount');
+var _getPuzzleLeveloperationSize = Module['_getPuzzleLeveloperationSize'] = makeInvalidEarlyAccess('_getPuzzleLeveloperationSize');
+var _getPuzzleLevelOpCount = Module['_getPuzzleLevelOpCount'] = makeInvalidEarlyAccess('_getPuzzleLevelOpCount');
+var _getPuzzleLevelDescription = Module['_getPuzzleLevelDescription'] = makeInvalidEarlyAccess('_getPuzzleLevelDescription');
 var _getPuzzleLevelOperations = Module['_getPuzzleLevelOperations'] = makeInvalidEarlyAccess('_getPuzzleLevelOperations');
 var _main = makeInvalidEarlyAccess('_main');
 var _fflush = makeInvalidEarlyAccess('_fflush');
@@ -1612,8 +1613,12 @@ function assignWasmExports(wasmExports) {
   _getPuzzleLevelStartBitstring = Module['_getPuzzleLevelStartBitstring'] = createExportWrapper('getPuzzleLevelStartBitstring', 1);
   assert(typeof wasmExports['getPuzzleLevelGoalBitstring'] != 'undefined', 'missing Wasm export: getPuzzleLevelGoalBitstring');
   _getPuzzleLevelGoalBitstring = Module['_getPuzzleLevelGoalBitstring'] = createExportWrapper('getPuzzleLevelGoalBitstring', 1);
-  assert(typeof wasmExports['getPuzzleLevelOperationCount'] != 'undefined', 'missing Wasm export: getPuzzleLevelOperationCount');
-  _getPuzzleLevelOperationCount = Module['_getPuzzleLevelOperationCount'] = createExportWrapper('getPuzzleLevelOperationCount', 1);
+  assert(typeof wasmExports['getPuzzleLeveloperationSize'] != 'undefined', 'missing Wasm export: getPuzzleLeveloperationSize');
+  _getPuzzleLeveloperationSize = Module['_getPuzzleLeveloperationSize'] = createExportWrapper('getPuzzleLeveloperationSize', 1);
+  assert(typeof wasmExports['getPuzzleLevelOpCount'] != 'undefined', 'missing Wasm export: getPuzzleLevelOpCount');
+  _getPuzzleLevelOpCount = Module['_getPuzzleLevelOpCount'] = createExportWrapper('getPuzzleLevelOpCount', 1);
+  assert(typeof wasmExports['getPuzzleLevelDescription'] != 'undefined', 'missing Wasm export: getPuzzleLevelDescription');
+  _getPuzzleLevelDescription = Module['_getPuzzleLevelDescription'] = createExportWrapper('getPuzzleLevelDescription', 1);
   assert(typeof wasmExports['getPuzzleLevelOperations'] != 'undefined', 'missing Wasm export: getPuzzleLevelOperations');
   _getPuzzleLevelOperations = Module['_getPuzzleLevelOperations'] = createExportWrapper('getPuzzleLevelOperations', 1);
   assert(typeof wasmExports['main'] != 'undefined', 'missing Wasm export: main');

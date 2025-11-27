@@ -24,12 +24,12 @@ static char *ops4[] = {"SHL 1", "SHR 1", "SHL 2", "SHL 2"};
 static char *ops5[] = {"ROL 1", "ROR 1", "ROR 2", "ROR 2"};
 
 static TutorialLevel tutorial_levels[] = {
-    {"AND Operator", "AND", 1, "1", ops0, 2, "This is the AND Operator."},
-    {"OR Operator",  "OR",  1, "0", ops1, 2, "This is the OR Operator."},
-    {"NOT Operator", "NOT", 1, "0", ops2, 1, "This is the NOT Operator."},
-    {"XOR Operator", "XOR", 1, "0", ops3, 2, "This is the XOR Operator."},
-    {"Shift Operators", "SHL, SHR", 8, "01000101", ops4, 4, "These are the Shift Operators."},
-    {"Rotate Operators", "ROL, ROR", 8, "01000101", ops5, 4, "These are the Rotate Operators."},
+    {"AND Operator", "AND", 1, "1", ops0, 2, "Given two bits. The result of the and operation is 1 only if both bits 1s. Otherwise, it results to a 0 <br/><br/>1 AND 1 = 1<br/>1 AND 0 = 0<br/>0 AND 1 = 0<br/>0 AND 0 = 0"},
+    {"OR Operator",  "OR",  1, "0", ops1, 2, "Given two bits. The result of the operation is 1 if at least one bit is a 1. Otherwise, it results to a 0 <br/><br/>1 OR 1 = 1<br/>1 OR 0 = 1 <br/>0 OR 1 = 1 <br/>0 OR 0 = 0 <br/>"},
+    {"NOT Operator", "NOT", 1, "0", ops2, 1, "Turns a 0 to a 1 and vice versa<br/><br/> NOT 0 = 1<br/>NOT 1 = 0<br/>"},
+    {"XOR Operator", "XOR", 1, "0", ops3, 2, "Given two bits. The result of the operation is 1 only when the bits are different.<br/><br/>1 XOR 1 = 0<br/>1 XOR 0 = 1<br/>0 XOR 1 = 1<br/>0 XOR 0 = 0<br/>"},
+    {"Shift Operators", "SHL, SHR", 8, "01000101", ops4, 4, "For the Shift Left Operation, SHL moves all bits to the left by a certain amount. The most significant bit (the leftmost bit) will be shifted out and the least significant bit (the rightmost bit) will be a 0 <br/> For the Shift Right Operation, SHR moves all bits to the right by a certain amount. <br/><br/> This time, the least significant bit (the rightmost bit) will be shifted out and the most significant bit (the leftmost bit) will be a 0 "},
+    {"Rotate Operators", "ROL, ROR", 8, "01000101", ops5, 4, "For the Rotate Left Operation, ROL moves all bits to the left by a certain amount. The most significant bit (the leftmost bit) will be put to the place of the least significant bit (the rightmost bit). <br/><br/> For the Rotate Right Operation, SHR moves all bits to the right by a certain amount. This time, the least significant bit (the rightmost bit) will be put to the place of the most significant bit (the leftmost bit) "},
 };
 
 EMSCRIPTEN_KEEPALIVE

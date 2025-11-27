@@ -161,11 +161,10 @@ body {
     height: 20px;
 }
 
-
 .puzzle-desc {
     margin-left: 50px;
     width: 550px;
-    height: 500px;
+    height: 600px;
     background-image: url(/assets/paper.png);
     background-size: cover;
 }
@@ -190,7 +189,6 @@ body {
     line-height: 30px;
     font-size: 18px;
     letter-spacing: 0.5px;
-    text-indent: 40px;
     text-align: justify;
     color: var(--color-dark);
 }

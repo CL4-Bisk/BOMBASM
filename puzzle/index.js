@@ -10,8 +10,10 @@ PuzzleLevelsModule().then((Module) => {
     const getBitwidth         = Module.cwrap("getPuzzleLevelBitWidth", "number", []);
     const getStartBitstring   = Module.cwrap("getPuzzleLevelStartBitstring", "string", []);
     const getGoalBitstring    = Module.cwrap("getPuzzleLevelGoalBitstring", "string", []);
-    const getOpCount          = Module.cwrap("getPuzzleLevelOperationCount", "number", []);
+    const getOpCount          = Module.cwrap("getPuzzleLevelOpCount", "number", []);
     const getOperations       = Module.cwrap("getPuzzleLevelOperations", "string", []);
+    const getDesc             = Module.cwrap("getPuzzleLevelDescription", "string", []);
+
 
     const title         = document.querySelector(".title");
     const subtitle      = document.querySelector(".subtitle");
@@ -19,6 +21,7 @@ PuzzleLevelsModule().then((Module) => {
     const targetBit     = document.querySelector(".target-section .bitstring");
     const opcount       = document.querySelector(".operation-count-section .screen")
     const opButtons     = document.querySelector(".main-buttons");
+    const desc          = document.querySelector(".body");
 
     const params = new URLSearchParams(document.location.search);
     const puzzleIndex = parseInt(params.get("level"));
@@ -31,6 +34,7 @@ PuzzleLevelsModule().then((Module) => {
     currentBit.textContent  = getStartBitstring(puzzleIndex); 
     targetBit.textContent   = getGoalBitstring(puzzleIndex);
     opcount.textContent     = getOpCount(puzzleIndex);
+    desc.innerHTML        = getDesc(puzzleIndex)
 
     function unlockNextLevel(currentLevel) {
         const nextLevel = currentLevel + 1;
@@ -52,7 +56,7 @@ PuzzleLevelsModule().then((Module) => {
             "bitStringOperations", "string", ["string", "string", "string", "number"]
         );
 
-        const operations = getOperations().split(",");
+        const operations = getOperations(puzzleIndex).split(",");
         operations.forEach(op => {
             const button = document.createElement("button");
             button.className = "operation-btn";

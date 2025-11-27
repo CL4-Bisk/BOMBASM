@@ -25,7 +25,7 @@ TutorialLevelsModule().then((Module) => {
     title.textContent       = getLevelTitle(index);
     subtitle.textContent    = getLevelOperator(index);
     currentBit.textContent  = getStartBitstring(index); 
-    description.textContent = getDescription(index);
+    description.innerHTML = getDescription(index);
 
     GameLogicModule().then((Module) => { 
         const doBitOperation = Module.cwrap(
