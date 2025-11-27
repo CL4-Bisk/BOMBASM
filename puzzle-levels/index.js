@@ -56,7 +56,7 @@ PuzzleLevelsModule().then((Module) => {
             document.getElementById(i).disabled = false;
             console.log("Level " + i + " is unlocked.");
             document.getElementById(i).addEventListener("mouseover", async () => {
-                await addTypeWriterEffect(".desc", getLevelDesc(i))
+                await addTypeWriterEffect(".desc", getLevelDesc(i - 1))
             })
         } else {
             document.getElementById(i).disabled = true;
