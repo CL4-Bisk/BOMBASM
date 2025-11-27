@@ -78,7 +78,7 @@ body {
 .puzzle-comp {
     width: 500px;
     height: 602px;
-    background-image: url(/assets/puzzle-comp-3.png);
+    background-image: url(./../assets/puzzle-comp-3.png);
     background-size: contain;
 }
 
@@ -165,7 +165,7 @@ body {
     margin-left: 50px;
     width: 550px;
     height: 600px;
-    background-image: url(/assets/paper.png);
+    background-image: url(./../assets/paper.png);
     background-size: cover;
 }
 
@@ -228,7 +228,7 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
-    background-image: url(/assets/paper.png);
+    background-image: url(./../assets/paper.png);
     background-size: cover;
 }
 
