@@ -1,15 +1,6 @@
 import addTypeWriterEffect from './../global.js'
-import { changeMusic } from '../global.js';
 
 addTypeWriterEffect(".desc", "Welcome to the Puzzle Levels :)")
-
-changeMusic("puzzle-select");
-
-if (changeMusic) {
-    console.log(changeMusic.src);
-} else {
-    console.log("Music not changed");
-}
 
 document.querySelector(".home-btn").addEventListener("click", e => {
     e.preventDefault();
