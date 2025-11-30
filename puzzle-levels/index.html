@@ -3,25 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="../index.css">
     <title>Puzzle Levels</title>
-    <script src="./../src/get-puzzle-levels/script.js"></script>
+    <script src="../src/get-puzzle-levels/script.js"></script>
 </head>
 <body>
-    <iframe id="music-frame" src="/music.html" style="display:none"></iframe>
-    <img class="bg-image" src="./../assets/bg-image.jpg">
+    <!-- Hidden music player iframe -->
+    <iframe id="music-frame" src="../music.html" style="display:none"></iframe>
+
+    <img class="bg-image" src="../assets/bg-image.jpg" alt="Background">
+
     <figure class="home-btn">
-        <img class="home-icon" src="./../assets/home.png">
+        <img class="home-icon" src="../assets/home.png" alt="Home Icon">
         <p>HOME</p>
     </figure>
+
     <figure class="next-btn">
-        <img class="next-icon" src="./../assets/next.png">
+        <img class="next-icon" src="../assets/next.png" alt="Next Icon">
         <p>TUTORIALS</p>
     </figure>
-    
+
     <div class="bg-cover"></div>
     <div class="overlay"></div>
-    <img class="shadow" src="./../assets/shadow.png">
+    <img class="shadow" src="../assets/shadow.png" alt="Shadow">
 
     <main class="puzzle-levels">
         <section class="body">
@@ -29,5 +33,8 @@
             <section class="levels"></section>            
         </section>
     </main>      
-    <script type="module" src="index.js"></script></body>
+
+    <!-- Module for puzzle logic -->
+    <script type="module" src="index.js"></script>
+</body>
 </html>
