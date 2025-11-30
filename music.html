@@ -1,12 +1,10 @@
-<audio class="music-page"></audio>
+<audio class="music-page" src="./audio/UI/Three Red Hearts - Penultimate.ogg" autoplay loop></audio>
 
 <script type="module">
 export function changeMusicPage(page, puzzleNumber) {
     const musicPage = document.querySelector(".music-page");
 
-    if ((page === "home" || page === "tutorial" || page === "puzzle-select") && puzzleNumber == undefined) {
-        musicPage.src = "/audio/UI/Three Red Hearts - Penultimate.ogg";
-    } else if (page === "puzzle") {
+    if (page === "puzzle") {
         const tracks = [
             "Modern Bits",
             "Penguin Town",
@@ -18,7 +16,7 @@ export function changeMusicPage(page, puzzleNumber) {
         ];
 
         if (tracks[puzzleNumber]) {
-            musicPage.src = `/audio/UI/Three Red Hearts - ${tracks[puzzleNumber]}.ogg`;
+            musicPage.src = `./audio/UI/Three Red Hearts - ${tracks[puzzleNumber]}.ogg`;
         }
     }
 
