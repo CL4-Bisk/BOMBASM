@@ -7,11 +7,14 @@
     <title>Home</title>
 </head>
 <body>
+    <!-- Hidden music player iframe -->
     <iframe id="music-frame" src="music.html" style="display:none"></iframe>
-    <img class="bg-image" src="./assets/bg-image.jpg">
+
+    <img class="bg-image" src="./assets/bg-image.jpg" alt="Background">
     <div class="bg-cover"></div>
-    <img class="shadow" src="./assets/shadow.png">
+    <img class="shadow" src="./assets/shadow.png" alt="Shadow">
     <div class="overlay"></div>
+
     <main class="game-start-menu">
         <header>
             <h1 class="title">BOMBASM</h1>
@@ -22,6 +25,8 @@
             <button class="start-btn">Play Now!</button>
         </section>
     </main>      
+
+    <!-- Global scripts -->
     <script type="module" src="global.js"></script>
     <script type="module" src="index.js"></script>
 </body>
