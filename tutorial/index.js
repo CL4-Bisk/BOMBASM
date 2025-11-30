@@ -1,6 +1,16 @@
+import { changeMusic } from "../global.js";
+
 document.querySelector(".to-menu-btn").addEventListener("click", () => {
     window.location.href = "../tutorial-levels/index.html"
 })
+
+changeMusic("tutorial");
+
+if (changeMusic) {
+    console.log("Music changed");
+} else {
+    console.log("Music not changed");
+}
 
 TutorialLevelsModule().then((Module) => {
     const getTutorialCount      = Module.cwrap("getTutorialLevelCount", "number", []);
