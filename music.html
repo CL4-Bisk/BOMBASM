@@ -1,0 +1,41 @@
+<audio class="music-page"></audio>
+
+<script type="module">
+export function changeMusicPage(page, puzzleNumber) {
+    const musicPage = document.querySelector(".music-page");
+
+    if ((page === "home" || page === "tutorial" || page === "puzzle-select") && puzzleNumber == undefined) {
+        musicPage.src = "/audio/UI/Three Red Hearts - Penultimate.ogg";
+    } else if (page === "puzzle") {
+        const tracks = [
+            "Modern Bits",
+            "Penguin Town",
+            "Puzzle Pieces",
+            "Sanctuary",
+            "Deep Blue",
+            "Box Jump",
+            "Connected"
+        ];
+
+        if (tracks[puzzleNumber]) {
+            musicPage.src = `/audio/UI/Three Red Hearts - ${tracks[puzzleNumber]}.ogg`;
+        }
+    }
+
+    musicPage.loop = true;
+    musicPage.play().catch(err => {
+        console.log("Autoplay blocked:", err);
+    });
+}
+
+window.addEventListener("message", e => {
+    if (e.data.type === "change-music") {
+        changeMusicPage(e.data.page, e.data.puzzleNumber);
+        console.log("music changed")
+        console.log(e.data)
+    } else {
+        console.log("music no")
+        console.log(e.data)
+    }
+});
+</script>

@@ -27,3 +27,10 @@ export default function addTypeWriterEffect(selector, content, skipby = 1, delay
         type();
     });
 }
+
+export function changeMusic(page, puzzleNumber) {
+    document.getElementById("music-frame").contentWindow.postMessage(
+        { type: "change-music", page, puzzleNumber },
+        "*"
+    );
+}

@@ -1,3 +1,5 @@
+import { changeMusic } from "../global.js";
+
 document.querySelector(".to-menu-btn").addEventListener("click", () => {
     window.location.href = "../puzzle-levels/index.html";
 })
@@ -29,12 +31,14 @@ PuzzleLevelsModule().then((Module) => {
 
     console.log(getPuzzleLevelTitle(puzzleIndex));
 
+    changeMusic("puzzle", puzzleIndex);
+
     title.textContent       = getPuzzleLevelTitle(puzzleIndex);
     subtitle.textContent    = getPuzzleLevelSubtitle(puzzleIndex);
     currentBit.textContent  = getStartBitstring(puzzleIndex); 
     targetBit.textContent   = getGoalBitstring(puzzleIndex);
     opcount.textContent     = getOpCount(puzzleIndex);
-    desc.innerHTML        = getDesc(puzzleIndex)
+    desc.innerHTML          = getDesc(puzzleIndex)
 
     function unlockNextLevel(currentLevel) {
         const nextLevel = currentLevel + 1;

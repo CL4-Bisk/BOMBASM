@@ -1,8 +1,17 @@
 import addTypeWriterEffect from './../global.js'
+import { changeMusic } from '../global.js';
 
 (async () => {
     await addTypeWriterEffect(".desc", "Welcome to the Tutorial Levels :)")
 })()
+
+changeMusic("tutorial");
+
+if (changeMusic) {
+    console.log(changeMusic);
+} else {
+    console.log("Music not changed");
+}
 
 document.querySelector(".home-btn").addEventListener("click", e => {
     e.preventDefault();
