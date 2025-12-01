@@ -96,7 +96,7 @@ function playRandomExplosionGIF() {
     const gif = document.createElement("img");
     gif.src = explosionGifs[Math.floor(Math.random() * explosionGifs.length)];
     gif.style.position = "absolute";
-    gif.style.width = `${Math.random() * 100 + 50}px`; // random size between 50-150px
+    gif.style.width = `${Math.random() * 850 + 650}px`; // random size between 50-150px
     gif.style.top = `${Math.random() * (modal.clientHeight - 100)}px`;
     gif.style.left = `${Math.random() * (modal.clientWidth - 100)}px`;
     gif.style.pointerEvents = "none"; // allow clicks to pass through
