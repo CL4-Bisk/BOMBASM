@@ -72,7 +72,7 @@ export function setupButtonSounds() {
 function playRandomExplosion() {
   const randomIndex = Math.floor(Math.random() * explosionSounds.length);
   const audio = new Audio(explosionSounds[randomIndex]);
-  audio.volume = 0.5; // optional: adjust volume
+  audio.volume = 1.0; // optional: adjust volume
   audio.play();
 }
 
