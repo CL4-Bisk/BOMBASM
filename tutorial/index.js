@@ -1,4 +1,4 @@
-import { setupButtonSounds } from "../global.js";
+import { setupButtonSounds } from "./../global.js";
 
 setupButtonSounds();
 
