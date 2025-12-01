@@ -84,6 +84,12 @@ PuzzleLevelsModule().then((Module) => {
                     const victoryModal = document.querySelector(".victory-modal");
                     modalOverlay.classList.remove("hidden");
                     victoryModal.classList.remove("hidden");
+                    if (puzzleIndex == getPuzzleCount() - 1) {
+                        document.querySelector(".next-puzzle-btn").classList.add("hidden");   
+                    } else {
+                        document.querySelector(".next-puzzle-btn").classList.remove("hidden");
+                    }
+                    
                     unlockNextLevel(puzzleIndex + 1);
                 } else if (opcount.textContent == 0) {
                     const explosionModal = document.querySelector(".explosion-modal");
@@ -92,7 +98,8 @@ PuzzleLevelsModule().then((Module) => {
                     const modalOverlay = document.querySelector(".modal-overlay");
                     const gameOverModal = document.querySelector(".gameover-modal");
                     modalOverlay.classList.remove("hidden");
-                    gameOverModal.classList.remove("hidden");                    
+                    gameOverModal.classList.remove("hidden");
+                   
                 }
             });
 
