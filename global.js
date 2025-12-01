@@ -1,11 +1,12 @@
 let currentEffect = null;
-const confirmSound = new Audio("./audio/buttons/Confirm.wav");
-const cancelSound = new Audio("./audio/buttons/Cancel.wav");
-
-confirmSound.volume = 1.0;
-cancelSound.volume = 1.0;
 
 export function setupButtonSounds() {
+    const confirmSound = new Audio("./audio/buttons/Confirm.wav");
+    const cancelSound = new Audio("./audio/buttons/Cancel.wav");
+
+    confirmSound.volume = 1.0;
+    cancelSound.volume = 1.0;
+    
     document.querySelectorAll("button, .main-buttons, .home-btn, .next-btn, .prev-btn, .to-menu-btn, .home-btn, .level-btn").forEach(btn => {
         btn.addEventListener("click", () => {
             confirmSound.currentTime = 0;
