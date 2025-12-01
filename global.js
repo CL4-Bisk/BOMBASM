@@ -1,6 +1,6 @@
 let currentEffect = null;
-const confirmSound = new Audio("/audio/buttons/Confirm 1.wav");
-const cancelSound = new Audio("/audio/buttons/Cancel 1.wav");
+const confirmSound = new Audio("./audio/buttons/Confirm 1.wav");
+const cancelSound = new Audio("./audio/buttons/Cancel 1.wav");
 
 confirmSound.volume = 1.0;
 cancelSound.volume = 1.0;
