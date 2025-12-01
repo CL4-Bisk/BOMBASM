@@ -1,4 +1,4 @@
-import { changeMusic, setupButtonSounds } from "./../global.js";
+import { changeMusic, setupButtonSounds, startExplosionSequence } from "./../global.js";
 
 setupButtonSounds();
 
@@ -86,6 +86,7 @@ PuzzleLevelsModule().then((Module) => {
                     victoryModal.classList.remove("hidden");
                     unlockNextLevel(puzzleIndex + 1);
                 } else if (opcount.textContent == 0) {
+                    startExplosionSequence();
                     const modalOverlay = document.querySelector(".modal-overlay");
                     const gameOverModal = document.querySelector(".gameover-modal");
                     modalOverlay.classList.remove("hidden");
