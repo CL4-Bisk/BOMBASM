@@ -1,4 +1,23 @@
 let currentEffect = null;
+const confirmSound = new Audio("/audio/buttons/Confirm 1.wav");
+const cancelSound = new Audio("/audio/buttons/Cancel 1.wav");
+
+confirmSound.volume = 1.0;
+cancelSound.volume = 1.0;
+
+export function setupButtonSounds() {
+    document.querySelectorAll("button, .main-buttons, .home-btn, .next-btn, .prev-btn, .to-menu-btn, .home-btn, .level-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            confirmSound.currentTime = 0;
+            confirmSound.play().catch(()=>{});
+        });
+
+        btn.addEventListener("mouseover", () => {
+            cancelSound.currentTime = 0;
+            cancelSound.play().catch(()=>{});
+        });
+    });
+}
 
 export default function addTypeWriterEffect(selector, content, skipby = 1, delayInMS = 50) {
     if (currentEffect) currentEffect.cancel = true;

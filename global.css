@@ -47,6 +47,12 @@ button {
     cursor: pointer;
 }
 
+button:active, .home-btn:active, .next-btn:active {
+    transform: scale(0.95);
+    transition: transform 0.05s;
+}
+
+
 .bold {
     font-weight: var(--fw-bold);
 }

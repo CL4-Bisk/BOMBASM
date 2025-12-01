@@ -1,3 +1,7 @@
+import { setupButtonSounds } from "../global.js";
+
+setupButtonSounds();
+
 document.querySelector(".to-menu-btn").addEventListener("click", () => {
     window.location.href = "../tutorial-levels/index.html"
 })

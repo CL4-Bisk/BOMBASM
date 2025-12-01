@@ -1,4 +1,5 @@
 import addTypeWriterEffect from './../global.js'
+import { setupButtonSounds } from './../global.js';
 
 (async () => {
     await addTypeWriterEffect(".desc", "Welcome to the Tutorial Levels :)")
@@ -39,6 +40,8 @@ TutorialLevelsModule().then((Module) => {
         })
         tutorialLevelDisplay.appendChild(button);
     }
+
+    setupButtonSounds();
 });
 
 
