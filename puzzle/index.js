@@ -86,7 +86,7 @@ PuzzleLevelsModule().then((Module) => {
                     victoryModal.classList.remove("hidden");
                     unlockNextLevel(puzzleIndex + 1);
                 } else if (opcount.textContent == 0) {
-                    startExplosionSequence(5000);
+                    startExplosionSequence(10000);
                     const modalOverlay = document.querySelector(".modal-overlay");
                     const gameOverModal = document.querySelector(".gameover-modal");
                     modalOverlay.classList.remove("hidden");
