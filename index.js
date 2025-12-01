@@ -1,7 +1,8 @@
 import addTypeWriterEffect from './global.js'
-import { changeMusic } from './global.js';
+import { changeMusic, setupButtonSounds } from './global.js';
 
 changeMusic("home");
+setupButtonSounds();
 
 (async () => {
     await addTypeWriterEffect(".desc", "BOMBASM is a web game built for people who want to learn more about bit manipulation and operations.", 4, 50)

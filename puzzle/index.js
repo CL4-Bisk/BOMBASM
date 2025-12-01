@@ -1,4 +1,6 @@
-import { changeMusic } from "../global.js";
+import { changeMusic, setupButtonSounds } from "../global.js";
+
+setupButtonSounds();
 
 document.querySelector(".to-menu-btn").addEventListener("click", () => {
     window.location.href = "../puzzle-levels/index.html";

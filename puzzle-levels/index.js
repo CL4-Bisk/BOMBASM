@@ -1,4 +1,5 @@
 import addTypeWriterEffect from './../global.js'
+import { setupButtonSounds } from "../global.js";
 
 addTypeWriterEffect(".desc", "Welcome to the Puzzle Levels :)")
 
@@ -65,4 +66,6 @@ PuzzleLevelsModule().then((Module) => {
             });
         }
     }
+
+    setupButtonSounds();
 });
