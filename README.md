@@ -19,6 +19,8 @@ BOMBASM is a browser-based bit-manipulation puzzle game built for learning and p
   - `GameLogicModule` (`src/bitstring-operations/game_logic.*`)
   - `PuzzleLevelsModule` (`src/get-puzzle-levels/script.*`)
   - `TutorialLevelsModule` (`src/get-tutorial-levels/script.*`)
+  
+  For more details about Emscripten and WASM, click on the link for documentations: [*Emscripten.org*](https://emscripten.org/)
 
 ## Functions
 
@@ -75,6 +77,7 @@ Each tutorial loads explanatory text plus interactive operation buttons applied 
 ### Prerequisites
 
 - A modern browser with WebAssembly support
+- EMCC environment variables installed in computer (check the [YouTube Video Tutorial](https://youtu.be/_8T9T6MQ1fU?si=I5pYYkhbm5wzzsgP))
 - A local HTTP server (required for `.wasm` loading)
 - Optional (for rebuilding WASM): Emscripten (`emcc`)
 
