@@ -65,6 +65,7 @@ char* bitStringOperations(char *a, char *b, char *op, int bitWidth) {
           break;
       case 6:
           mask = 0x3F;       // 11 1111
+          break;
       case 8:
           mask = 0xFF;       // 1111 1111
           break;
