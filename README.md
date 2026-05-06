@@ -141,7 +141,7 @@ BOMBASM/
 └── README.md
 ```
 
-## Issues
+## Bugs and Issues
 
 Known issues in the current codebase:
 
